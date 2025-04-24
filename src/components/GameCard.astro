@@ -1,0 +1,108 @@
+---
+import Button from "./Button";
+import { getButtonClass } from "./Button/getButtonClass";
+import { ArrowRightIcon } from "./Icons";
+import { ChartBarIcon, ClockIcon, UsersIcon } from "./Icons";
+
+interface Props {
+	title: string;
+	description: string;
+	image: string;
+	difficulty: 1 | 2 | 3 | 4 | 5;
+	players: { min: number; max: number };
+	duration: number;
+	price: number;
+	theme: "mystery" | "fbi" | "brewery";
+	class?: string;
+}
+
+const {
+	title,
+	description,
+	image,
+	difficulty,
+	players,
+	duration,
+	theme,
+	price,
+	class: userClass,
+} = Astro.props;
+
+const themeColorClass = {
+	mystery: "bg-gradient-to-r from-mystery-theme to-mystery-theme-darker",
+	fbi: "bg-gradient-to-r from-fbi-theme to-fbi-theme-darker",
+	brewery: "bg-gradient-to-r from-brewery-theme to-brewery-theme-darker",
+}[theme];
+
+const difficultyDots = Array.from({ length: 5 }, (_, i) => ({
+	key: i,
+	class: `w-3 h-3 rounded-full ${i < difficulty ? themeColorClass : "bg-gray-700"}`,
+}));
+
+const gameLink = {
+	mystery: "/games#murder-mystery",
+	fbi: "/games#fbi-operation",
+	brewery: "/games#brewery-heist",
+}[theme];
+---
+
+<div
+	class=`rounded-lg bg-gray-800 border border-gray-700 text-white shadow-sm group animate-fade-in [animation-delay:150ms] overflow-hidden transition-all duration-300 hover:shadow-lg group ${userClass}`
+>
+	<div class="relative h-52 overflow-hidden group">
+		<div
+			class="absolute inset-0 bg-black transition-opacity duration-500 opacity-30 group-hover:opacity-10 z-10"
+		>
+		</div>
+		<div
+			class="w-full h-full transition-transform duration-500 transform group-hover:scale-105 will-change-transform"
+		>
+			<img src={image} alt={title} class="w-full h-full object-cover" />
+		</div>
+	</div>
+
+	<div class="flex flex-col space-y-1.5 p-6">
+		<div class="flex justify-between items-center">
+			<div class="font-semibold tracking-tight text-xl">{title}</div>
+			<div
+				class=`inline-flex items-center rounded-full text-xs font-semibold px-3 py-1 bg-gray-700`
+			>
+				${price}/person
+			</div>
+		</div>
+		<div class="text-sm text-gray-300 line-clamp-2">{description}</div>
+	</div>
+
+	<div class="p-6 pt-0">
+		<div class="space-y-4">
+			<div class="flex justify-between text-sm">
+				<div>
+					<p class="text-gray-300">Players</p>
+					<p class="font-medium">{players.min}-{players.max} people</p>
+				</div>
+				<div>
+					<p class="text-gray-300">Duration</p>
+					<p class="font-medium">{duration} minutes</p>
+				</div>
+			</div>
+
+			<div>
+				<p class="text-sm text-gray-300 mb-2">Difficulty</p>
+				<div class="flex space-x-1">
+					{difficultyDots.map((dot) => <div class={dot.class} />)}
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="flex items-center p-6 pt-0">
+		<a
+			href={gameLink}
+			class={getButtonClass({
+				class: `w-full ${themeColorClass} hover:animate-pulse-glow`,
+			})}
+		>
+			Details
+		</a>
+	</div>
+</div>

@@ -1,0 +1,388 @@
+---
+import { getCollection, type z } from "astro:content";
+import BookingCTA from "../components/BookingCTA.astro";
+import Button from "../components/Button";
+import { getButtonClass } from "../components/Button/getButtonClass";
+import {
+	ArrowRightIcon,
+	CalendarIcon,
+	ClockIcon,
+	UserIcon,
+} from "../components/Icons";
+import Input from "../components/Input.astro";
+import type { blogPostSchema, blogPostsCategories } from "../content.config.js";
+import Layout from "../layouts/Layout.astro";
+
+const blogPosts = await getCollection("blog");
+const postsData = blogPosts.map((post) => post.data);
+const postsSorted = postsData.sort(
+	(a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
+);
+
+let featuredPost: z.infer<typeof blogPostSchema> = {} as z.infer<
+	typeof blogPostSchema
+>;
+const categories: z.infer<typeof blogPostsCategories>[] = [];
+
+for (const post of postsSorted) {
+	if (post.id === 7) {
+		featuredPost = post;
+	}
+	const category = post.category;
+	const categoriesExists = categories.some((v) => v.name === category);
+
+	if (categoriesExists) continue;
+
+	const postsInCategory = postsSorted.filter((v) => v.category === category);
+	categories.push({ name: category, count: postsInCategory.length });
+}
+---
+
+<script is:inline define:vars={{ postsSorted, categories, featuredPost }}>
+	window.blogPostsData = {
+		posts: postsSorted,
+		categories,
+		featuredPost,
+	};
+</script>
+
+<Layout title="Blog - Escape Reality">
+	<div class="flex min-h-screen flex-col" x-data="blogData">
+		{/* Hero Section */}
+		<section class="relative h-[60vh] overflow-hidden">
+			<div class="absolute inset-0 bg-black/60 z-10"></div>
+			<img
+				src="/images/blog-hero.webp"
+				alt="Escape Room Blog"
+				class="object-cover w-full h-full absolute blur-[1px]"
+			/>
+			<div
+				class="relative z-20 container mx-auto px-4 h-full flex flex-col justify-center items-center text-center"
+			>
+				<h1
+					class="text-4xl md:text-6xl font-bold text-white leading-tight mb-4"
+				>
+					Escape Room <span class="text-purple-400">Insights</span>
+				</h1>
+				<p class="text-xl text-gray-200 max-w-2xl">
+					Tips, stories, and behind-the-scenes looks at the world of escape
+					rooms.
+				</p>
+			</div>
+		</section>
+
+		{/* Blog Content */}
+		<section class="py-16 bg-gray-900">
+			<div class="container mx-auto px-4">
+				<div class="flex flex-col md:flex-row gap-8">
+					{/* Main Content */}
+					<div class="w-full md:w-2/3">
+						<div
+							x-show="filteredPosts.length > 0"
+							class="grid grid-cols-1 md:grid-cols-2 gap-8"
+						>
+							<template x-for="post in filteredPosts" :key="post.id">
+								<article
+									class="bg-gray-800 rounded-xl overflow-hidden flex flex-col h-full"
+								>
+									<div class="relative h-48">
+										<img
+											:src="post.image || '/placeholder.svg'"
+											:alt="post.title"
+											class="object-cover w-full h-full"
+										/>
+										<div
+											class="absolute top-4 left-4 px-3 py-1 bg-purple-600 rounded-full text-xs font-medium text-white"
+											x-text="post.category"
+										>
+										</div>
+									</div>
+									<div class="p-6 flex flex-col flex-grow">
+										<h2
+											class="text-xl font-bold mb-2 text-white"
+											x-text="post.title"
+										>
+										</h2>
+										<p
+											class="text-gray-300 mb-4 flex-grow"
+											x-text="post.excerpt"
+										>
+										</p>
+										<div
+											class="grid gap-2 md:flex items-center text-sm text-gray-400 mb-4"
+										>
+											<div class="flex items-center mr-4">
+												<UserIcon class="h-4 w-4 mr-1" />
+												<span x-text="post.author" class="whitespace-nowrap"
+												></span>
+											</div>
+											<div class="flex items-center mr-4">
+												<CalendarIcon class="h-4 w-4 mr-1" />
+												<span
+													x-text="formatDate(post.date)"
+													class="whitespace-nowrap"></span>
+											</div>
+											<div class="flex items-center">
+												<ClockIcon class="h-4 w-4 mr-1" />
+												<span x-text="post.readTime" class="whitespace-nowrap"
+												></span>
+											</div>
+										</div>
+										<a
+											:href="formatBlogUrl({ id: post.id, title: post.title })"
+											class={getButtonClass({ variant: "outline" })}
+										>
+											Read More
+											<ArrowRightIcon class="ml-2 h-4 w-4" />
+										</a>
+									</div>
+								</article>
+							</template>
+						</div>
+
+						<div x-show="filteredPosts.length === 0" class="text-center py-12">
+							<h3 class="text-2xl font-bold text-white mb-4">
+								No matching articles found
+							</h3>
+							<p class="text-gray-300 mb-6">
+								Try adjusting your search terms or clear the filters.
+							</p>
+							<Button
+								@click="searchQuery = ''; selectedCategory = 'All';"
+								variant="outline"
+							>
+								Clear Filters
+							</Button>
+						</div>
+					</div>
+
+					{/* Sidebar */}
+					<div class="w-full md:w-1/3">
+						{/* Search */}
+						<div class="bg-gray-800 rounded-xl p-6 mb-8">
+							<h3 class="text-xl font-bold mb-4 text-white">Search</h3>
+							<Input placeholder="Search articles..." x-model="searchQuery" />
+							<Button
+								@click="searchQuery = ''; selectedCategory = 'All';"
+								variant="outline"
+								class="w-full mt-4">Clear filters</Button
+							>
+						</div>
+
+						{/* Categories */}
+						<div class="bg-gray-800 rounded-xl p-6 mb-8">
+							<h3 class="text-xl font-bold mb-4 text-white">Categories</h3>
+							<ul class="space-y-2">
+								<li>
+									<button
+										@click="selectedCategory = 'All'"
+										class="text-gray-300 hover:text-purple-400 flex justify-between w-full text-left"
+										:class="{'text-purple-400 font-medium': selectedCategory === 'All'}"
+									>
+										<span class="mr-1">All</span>
+										<span class="text-gray-500" x-text="allPosts.length"></span>
+									</button>
+								</li>
+								<template
+									x-for="category in allCategories"
+									:key="category.name"
+								>
+									<li>
+										<button
+											@click="selectedCategory = category.name"
+											class="text-gray-300 hover:text-purple-400 flex justify-between w-full text-left"
+											:class="{'text-purple-400 font-medium': selectedCategory === category.name}"
+										>
+											<span x-text="category.name" class="mr-1"></span>
+											<span class="text-gray-500" x-text="category.count"
+											></span>
+										</button>
+									</li>
+								</template>
+							</ul>
+						</div>
+
+						{/* Popular Posts */}
+						<div class="bg-gray-800 rounded-xl p-6 mb-8">
+							<h3 class="text-xl font-bold mb-4 text-white">Popular Posts</h3>
+							<ul class="space-y-4">
+								<template x-for="post in allPosts.slice(0, 3)" :key="post.id">
+									<li class="flex gap-4 items-center">
+										<div class="relative size-16 flex-shrink-0">
+											<img
+												:src="post.image"
+												:alt="post.title"
+												class="object-cover rounded-md h-full"
+											/>
+										</div>
+										<div>
+											<a
+												:href="formatBlogUrl({ id: post.id, title: post.title })"
+												class="text-sm font-medium text-white hover:text-purple-400"
+												x-text="post.title"
+											>
+											</a>
+											<p
+												class="text-xs text-gray-400 mt-1"
+												x-text="formatDate(post.date)"
+											>
+											</p>
+										</div>
+									</li>
+								</template>
+							</ul>
+						</div>
+
+						{/* Newsletter */}
+						<div class="bg-purple-900 rounded-xl p-6">
+							<h3 class="text-xl font-bold mb-2 text-white">
+								Subscribe to Our Newsletter
+							</h3>
+							<p class="text-purple-200 text-sm mb-4">
+								Get the latest escape room tips, promotions, and news delivered
+								to your inbox.
+							</p>
+							<div class="space-y-2">
+								<Input placeholder="Your email address" />
+								<Button class="w-full">Subscribe</Button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		{/* Featured Article */}
+		<section
+			class="py-16 bg-gradient-to-r from-purple-900 to-indigo-900 text-white"
+		>
+			<div class="container mx-auto px-4">
+				<div class="text-center mb-12">
+					<h2 class="text-3xl md:text-4xl font-bold mb-4">Featured Article</h2>
+					<p class="text-lg text-purple-200 max-w-2xl mx-auto">
+						Our most popular and informative content to help you master escape
+						rooms.
+					</p>
+				</div>
+
+				<div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+					<div class="relative h-[400px] rounded-xl overflow-hidden">
+						<img
+							:src="featuredPost.image"
+							alt="Featured article about escape rooms"
+							class="object-cover w-full h-full"
+						/>
+					</div>
+
+					<div>
+						<div
+							class="inline-block px-4 py-1 bg-purple-700 rounded-full text-sm font-medium mb-4"
+						>
+							Expert Guide
+						</div>
+						<h3 class="text-3xl font-bold mb-4" x-text="featuredPost.title">
+						</h3>
+						<p
+							class="text-lg text-purple-200 mb-6"
+							x-text="featuredPost.excerpt"
+						>
+						</p>
+						<div
+							class="grid gap-2 md:flex items-center text-sm text-purple-300 mb-6"
+						>
+							<div class="flex items-center mr-4">
+								<UserIcon class="h-4 w-4 mr-1" />
+								<span x-text="featuredPost.author"></span>
+							</div>
+							<div class="flex items-center mr-4">
+								<CalendarIcon class="h-4 w-4 mr-1" />
+								<span x-text="formatDate(featuredPost.date)"></span>
+							</div>
+							<div class="flex items-center">
+								<ClockIcon class="h-4 w-4 mr-1" />
+								<span x-text="featuredPost.readTime"></span>
+							</div>
+						</div>
+						<a
+							:href="formatBlogUrl({ id: featuredPost.id, title: featuredPost.title })"
+							class={getButtonClass({})}
+						>
+							Read Full Guide
+							<ArrowRightIcon class="ml-2 h-4 w-4" />
+						</a>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		{/* Booking CTA */}
+		<BookingCTA />
+	</div>
+</Layout>
+
+<script>
+	import Alpine from "alpinejs";
+	import type { blogPostSchema, blogPostsCategories } from "../content.config";
+	import type { z } from "astro:content";
+
+	declare global {
+		interface Window {
+			blogPostsData: {
+				posts: z.infer<typeof blogPostSchema>[];
+				categories: z.infer<typeof blogPostsCategories>;
+				featuredPost: z.infer<typeof blogPostSchema>;
+			};
+		}
+	}
+
+	document.addEventListener("alpine:init", () => {
+		Alpine.data("blogData", () => ({
+			allPosts: window.blogPostsData.posts,
+			featuredPost: window.blogPostsData.featuredPost,
+			allCategories: window.blogPostsData.categories,
+			searchQuery: "",
+			selectedCategory: "All",
+			get filteredPosts() {
+				let posts = this.allPosts as z.infer<typeof blogPostSchema>[];
+
+				if (this.selectedCategory !== "All") {
+					posts = posts.filter((post) => {
+						const match =
+							this.selectedCategory.toLowerCase() ===
+							post.category.toLowerCase();
+						return match;
+					});
+				}
+
+				if (this.searchQuery) {
+					const term = this.searchQuery.toLowerCase();
+					posts = posts.filter(
+						(p) =>
+							p.title.toLowerCase().includes(term) ||
+							p.excerpt.toLowerCase().includes(term) ||
+							p.author.toLowerCase().includes(term),
+					);
+				}
+
+				return posts;
+			},
+
+			formatBlogUrl({ id, title }: { id: string; title: string }) {
+				const titleFormatted = title
+					.toLowerCase()
+					.replaceAll(" ", "-")
+					.replace(/[^\w-]+/g, "");
+
+				return `/blog/${id}/${titleFormatted}`;
+			},
+
+			formatDate(dateStr: string) {
+				return new Date(dateStr).toLocaleDateString("en-US", {
+					year: "numeric",
+					month: "short",
+					day: "numeric",
+				});
+			},
+		}));
+	});
+</script>

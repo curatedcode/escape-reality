@@ -1,6 +1,6 @@
 ---
 import Footer from "../components/Footer.astro";
-import Navbar from "../components/Navbar/Navbar.astro";
+import Header from "../components/Header.astro";
 import "../styles/global.css";
 
 interface Props {
@@ -15,10 +15,13 @@ const { title } = Astro.props;
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="generator" content={Astro.generator} />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg?v=1.0" />
-		<meta name="description" content="SITE_DESCRIPTION" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg?v=3.0" />
+		<meta
+			name="description"
+			content="Escape rooms in Sarasota, FL. Solve puzzles, find clues, and beat the clock with friends, family, or coworkers. Fun for all skill levels!"
+		/>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<meta name="theme-color" content="THEME_COLOR" />
+		<meta name="theme-color" content="#000000" />
 		<meta name="apple-mobile-web-app-status-bar-style" content="default" />
 		<link rel="manifest" href="/manifest.json" />
 		<script
@@ -31,19 +34,31 @@ const { title } = Astro.props;
 
 		<!-- Twitter Card -->
 		<meta name="twitter:card" content="summary" />
-		<meta name="twitter:site" content="@SITE_TWITTER" />
-		<meta name="twitter:url" content="SITE_LIVE_URL" />
-		<meta name="twitter:title" content="SITE_TITLE" />
-		<meta name="twitter:description" content="SITE_DESCRIPTION" />
-		<meta name="twitter:image" content="SITE_LIVE_URL/icons/social-card.png" />
+		<meta name="twitter:site" content="@escaperealityfl" />
+		<meta name="twitter:url" content="https://escaperealityfl.com" />
+		<meta name="twitter:title" content="Escape Reality" />
+		<meta
+			name="twitter:description"
+			content="Escape rooms in Sarasota, FL. Solve puzzles, find clues, and beat the clock with friends, family, or coworkers. Fun for all skill levels!"
+		/>
+		<meta
+			name="twitter:image"
+			content="https://escaperealityfl.com/icons/social-card.png"
+		/>
 
 		<!-- Open Graph -->
 		<meta property="og:type" content="website" />
-		<meta property="og:title" content="SITE_TITLE" />
-		<meta property="og:description" content="SITE_DESCRIPTION" />
-		<meta property="og:site_name" content="SITE_TITLE" />
-		<meta property="og:url" content="SITE_LIVE_URL" />
-		<meta property="og:image" content="SITE_LIVE_URL/icons/social-card.png" />
+		<meta property="og:title" content="Escape Reality" />
+		<meta
+			property="og:description"
+			content="Escape rooms in Sarasota, FL. Solve puzzles, find clues, and beat the clock with friends, family, or coworkers. Fun for all skill levels!"
+		/>
+		<meta property="og:site_name" content="Escape Reality" />
+		<meta property="og:url" content="https://escaperealityfl.com" />
+		<meta
+			property="og:image"
+			content="https://escaperealityfl.com/icons/social-card.png"
+		/>
 
 		<!-- Apple touch icon -->
 		<link
@@ -86,9 +101,9 @@ const { title } = Astro.props;
 				});
 			}
 		</script>
-		<div class="flex flex-col min-h-screen">
-			<Navbar />
-			<main class="min-h-[calc(100vh-68px)]">
+		<div class="flex flex-col min-h-screen bg-black">
+			<Header />
+			<main>
 				<slot />
 			</main>
 			<Footer />

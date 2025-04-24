@@ -1,1 +1,153 @@
-<footer></footer>
+---
+import {
+	EnvelopeIcon,
+	FacebookIcon,
+	InstagramIcon,
+	MapPinIcon,
+	PhoneIcon,
+	YoutubeIcon,
+} from "./Icons";
+---
+
+<footer class="bg-black text-white border-t border-gray-800">
+	<div class="container mx-auto px-4 py-12">
+		<div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+			<div class="space-y-4">
+				<a href="/" class="flex items-center gap-2">
+					<span class="text-2xl font-bold">
+						<span class="text-purple-400">Escape</span> Reality
+					</span>
+				</a>
+				<p class="text-gray-400">
+					Immersive escape room experiences in the heart of Sarasota, Florida.
+				</p>
+				<div class="flex space-x-4">
+					<a
+						href="https://www.facebook.com/escaperealitysarasota"
+						class="text-gray-400 hover:text-purple-400"
+					>
+						<FacebookIcon class="h-5 w-5" />
+						<span class="sr-only">Facebook</span>
+					</a>
+					<a
+						href="http://instagram.com/escape.reality.srq"
+						class="text-gray-400 hover:text-purple-400"
+					>
+						<InstagramIcon class="h-5 w-5" />
+						<span class="sr-only">Instagram</span>
+					</a>
+					<a
+						href="https://www.youtube.com/channel/UC1n53dwNE5vK40VvG0U0iYQ"
+						class="text-gray-400 hover:text-purple-400"
+					>
+						<YoutubeIcon class="h-5 w-5" />
+						<span class="sr-only">Youtube</span>
+					</a>
+				</div>
+			</div>
+
+			<div>
+				<h3 class="text-lg font-bold mb-4">Quick as</h3>
+				<ul class="space-y-2">
+					<li>
+						<a href="/" class="text-gray-400 hover:text-purple-400"> Home </a>
+					</li>
+					<li>
+						<a href="/games" class="text-gray-400 hover:text-purple-400">
+							Our Games
+						</a>
+					</li>
+					<li>
+						<a href="/gift-cards" class="text-gray-400 hover:text-purple-400">
+							Gift Cards
+						</a>
+					</li>
+					<li>
+						<a
+							href="https://bookeo.com/escaperealityfl"
+							target="_blank"
+							rel="noopener noreferrer"
+							class="text-gray-400 hover:text-purple-400"
+						>
+							Book Now
+						</a>
+					</li>
+					<li>
+						<a href="/faq" class="text-gray-400 hover:text-purple-400"> FAQ </a>
+					</li>
+				</ul>
+			</div>
+
+			<div>
+				<h3 class="text-lg font-bold mb-4">Our Games</h3>
+				<ul class="space-y-2">
+					<li>
+						<a
+							href="/games#murder-mystery"
+							class="text-gray-400 hover:text-purple-400"
+						>
+							Clue Dunnit?
+						</a>
+					</li>
+					<li>
+						<a
+							href="/games#fbi-operation"
+							class="text-gray-400 hover:text-purple-400"
+						>
+							FBI & the Toxic Takedown
+						</a>
+					</li>
+					<li>
+						<a
+							href="/games#brewery-heist"
+							class="text-gray-400 hover:text-purple-400"
+						>
+							Brewery Heist
+						</a>
+					</li>
+				</ul>
+			</div>
+
+			<div>
+				<h3 class="text-lg font-bold mb-4">Contact Us</h3>
+				<ul class="space-y-2">
+					<li class="flex items-center gap-2 text-gray-400">
+						<MapPinIcon class="h-4 w-4 text-purple-400" />
+						6250 N Lockwood Ridge Rd , Sarasota, FL 34243
+					</li>
+					<li class="flex items-center gap-2 text-gray-400">
+						<PhoneIcon class="h-4 w-4 text-purple-400" />
+						<a href="tel:+19418065858" class="hover:text-purple-400">
+							(941) 806-5858
+						</a>
+					</li>
+					<li class="flex items-center gap-2 text-gray-400">
+						<EnvelopeIcon class="h-4 w-4 text-purple-400" />
+						<a
+							href="mailto:info@escaperealitysarasota.com"
+							class="hover:text-purple-400"
+						>
+							escaperealityfl@gmail.com
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+
+		<div
+			class="border-t border-gray-800 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center"
+		>
+			<p class="text-gray-400 text-sm">
+				&copy; {new Date().getFullYear()} Escape Reality Sarasota. All rights reserved.
+			</p>
+			<div class="flex gap-4 mt-4 md:mt-0">
+				<a href="/privacy" class="text-gray-400 hover:text-purple-400 text-sm">
+					Privacy Policy
+				</a>
+				<a href="/terms" class="text-gray-400 hover:text-purple-400 text-sm">
+					Terms of Service
+				</a>
+			</div>
+		</div>
+	</div>
+</footer>

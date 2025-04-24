@@ -16,7 +16,7 @@ export function getButtonClass({
 		"bg-accent-9 text-accent-contrast hover:bg-accent-10 active:bg-accent-10 active:saturate-solid-active active:brightness-solid-active";
 
 	const outlineClass =
-		"ring ring-accent-a8 text-accent-a11 hover:bg-accent-a2 active:bg-accent-a3";
+		"ring ring-white text-white hover:bg-white/10 active:bg-white/5";
 
 	const ghostClass = "hover:bg-accent-a3 active:bg-accent-a4";
 

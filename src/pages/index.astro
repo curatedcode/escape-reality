@@ -1,5 +1,336 @@
 ---
+import BookingCTA from "../components/BookingCTA.astro";
+import Button from "../components/Button";
+import { getButtonClass } from "../components/Button/getButtonClass";
+import GameCard from "../components/GameCard.astro";
+import {
+	ArrowRightIcon,
+	CalendarDaysIcon,
+	ChevronDownIcon,
+	ClockIcon,
+	MapPinIcon,
+	StarIcon,
+	UsersIcon,
+} from "../components/Icons";
+import Testimonial from "../components/Testimonial.astro";
 import Layout from "../layouts/Layout.astro";
+
+const testimonials = [
+	{
+		quote:
+			"The puzzles were so cleverly designed! We had a blast solving the Murder Mystery Manor and will definitely be back for the other rooms!",
+		author: "Sarah J.",
+		rating: 5 as const,
+	},
+	{
+		quote:
+			"Great team-building activity! Our company had an amazing time in the FBI Secret Operation room. The staff was fantastic and made sure we had a memorable experience.",
+		author: "Michael T.",
+		rating: 5 as const,
+	},
+	{
+		quote:
+			"The Brewery Heist was challenging but super fun! The attention to detail in the room design was impressive. Can't wait to try their other rooms!",
+		author: "Jessica R.",
+		rating: 5 as const,
+	},
+];
 ---
 
-<Layout title="My Awesome Site" />
+<Layout title="My Awesome Site">
+	<div class="flex min-h-screen flex-col">
+		{/* Hero Section */}
+		<section class="relative h-[93vh] overflow-hidden">
+			<div class="absolute inset-0 bg-black/60 z-10"></div>
+			<img
+				src="/images/hero-background.webp"
+				alt="Escape room adventure"
+				class="object-cover h-full absolute blur-[1px]"
+			/>
+			<div
+				class="relative -mt-14 z-20 container mx-auto px-4 h-full flex flex-col justify-center items-start md:-mt-10"
+			>
+				<div class="max-w-2xl space-y-6">
+					<h1 class="text-4xl md:text-6xl font-bold text-white leading-tight">
+						Escape Reality, <br />
+						<span class="text-purple-400">Embrace Adventure</span>
+					</h1>
+					<p class="text-xl text-gray-200">
+						Immerse yourself in thrilling escape room experiences designed to
+						challenge your mind and test your teamwork.
+					</p>
+					<div class="flex flex-col sm:flex-row gap-4">
+						<a
+							href="https://bookeo.com/escaperealityfl"
+							target="_blank"
+							rel="noopener noreferrer"
+							class={getButtonClass({ size: "lg" })}
+						>
+							Book Your Adventure
+							<ArrowRightIcon class="ml-2 h-4 w-4" />
+						</a>
+						<a
+							href="/games"
+							class={getButtonClass({ variant: "outline", size: "lg" })}
+						>
+							Explore Our Games
+						</a>
+					</div>
+				</div>
+				<ChevronDownIcon
+					id="scroll-arrow"
+					class="size-12 absolute bottom-8 left-1/2 -translate-x-1/2 text-white/50 animate-float transition hidden md:block"
+				/>
+			</div>
+
+			{/* Key Info Banner */}
+			<div
+				class="absolute bottom-0 left-0 right-0 bg-black/80 backdrop-blur-sm py-4 z-20"
+			>
+				<div
+					class="container mx-auto px-4 flex flex-wrap justify-center items-center gap-4 text-white lg:justify-between"
+				>
+					<div class="flex items-center gap-2">
+						<MapPinIcon class="h-5 w-5 text-purple-400" />
+						<span>Downtown Sarasota, FL</span>
+					</div>
+					<div class="flex items-center gap-2">
+						<ClockIcon class="h-5 w-5 text-purple-400" />
+						<span>Open 7 days: 10AM - 10PM</span>
+					</div>
+					<div class="flex items-center gap-2">
+						<UsersIcon class="h-5 w-5 text-purple-400" />
+						<span>Private bookings at no extra charge</span>
+					</div>
+					<div class="flex items-center gap-2">
+						<CalendarDaysIcon class="h-5 w-5 text-purple-400" />
+						<a
+							href="https://bookeo.com/escaperealityfl"
+							target="_blank"
+							rel="noopener noreferrer"
+							class="underline hover:text-purple-400"
+						>
+							Check Availability
+						</a>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		{/* USP Section */}
+		<section
+			class="py-16 pb-44 bg-gradient-to-b from-purple-900 to-indigo-900 text-white clip-diagonal-bottom-reversed"
+		>
+			<div class="container mx-auto px-4">
+				<div class="text-center mb-12">
+					<h2 class="text-3xl md:text-4xl font-bold mb-4">
+						Why Choose Escape Reality?
+					</h2>
+					<p class="text-lg text-purple-200 max-w-2xl mx-auto">
+						We offer a premium escape room experience with unique features you
+						won't find elsewhere.
+					</p>
+				</div>
+
+				<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+					<div
+						class="bg-purple-800/50 backdrop-blur-sm p-8 rounded-xl text-center border border-purple-700"
+					>
+						<div
+							class="bg-purple-700 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4"
+						>
+							<UsersIcon class="h-8 w-8" />
+						</div>
+						<h3 class="text-xl font-bold mb-2">Private Bookings</h3>
+						<p class="text-purple-200">
+							Every booking is private - your group won't be combined with
+							strangers, at no extra cost.
+						</p>
+					</div>
+
+					<div
+						class="bg-purple-800/50 backdrop-blur-sm p-8 rounded-xl text-center border border-purple-700"
+					>
+						<div
+							class="bg-purple-700 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4"
+						>
+							<StarIcon class="h-8 w-8" />
+						</div>
+						<h3 class="text-xl font-bold mb-2">Three Unique Games</h3>
+						<p class="text-purple-200">
+							Choose from three immersive adventures, each with its own unique
+							theme and challenges.
+						</p>
+					</div>
+
+					<div
+						class="bg-purple-800/50 backdrop-blur-sm p-8 rounded-xl text-center border border-purple-700"
+					>
+						<div
+							class="bg-purple-700 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4"
+						>
+							<ClockIcon class="h-8 w-8" />
+						</div>
+						<h3 class="text-xl font-bold mb-2">60-Minute Adventures</h3>
+						<p class="text-purple-200">
+							A full hour of immersive gameplay with state-of-the-art puzzles
+							and technology.
+						</p>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		{/* Featured Games */}
+		<div class="-mt-30 clip-diagonal-top-reversed">
+			<section class="pt-20 pb-44 bg-gray-900 clip-diagonal-bottom">
+				<div class="container mx-auto px-4">
+					<div class="text-center mb-12">
+						<h2 class="text-3xl md:text-4xl font-bold text-white mb-4">
+							Our Immersive Games
+						</h2>
+						<p class="text-lg text-gray-300 max-w-2xl mx-auto">
+							Choose your adventure from our three thrilling escape room
+							experiences.
+						</p>
+					</div>
+
+					<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+						<GameCard
+							title="Clue Dunnit?"
+							description="Solve a chilling murder case in an abandoned mansion before you become the next victim."
+							image="/images/murder-mystery.webp"
+							difficulty={3}
+							players={{ min: 2, max: 8 }}
+							duration={60}
+							theme="mystery"
+							price={35}
+						/>
+
+						<GameCard
+							title="FBI & The Toxic Takedown"
+							description="Join an elite FBI team to infiltrate a criminal organization and recover stolen intelligence."
+							image="/images/fbi-operation.webp"
+							difficulty={4}
+							players={{ min: 3, max: 8 }}
+							duration={60}
+							theme="fbi"
+							price={35}
+						/>
+
+						<GameCard
+							title="Brewery Heist"
+							description="Break into a famous brewery to steal their secret recipe before security catches you."
+							image="/images/brewery-heist.webp"
+							difficulty={4}
+							players={{ min: 3, max: 10 }}
+							duration={60}
+							theme="brewery"
+							price={35}
+						/>
+					</div>
+				</div>
+			</section>
+		</div>
+
+		{/* Testimonials */}
+		<section class="py-16 pt-24 -mt-36 bg-gray-800 clip-diagonal-top">
+			<div class="container mx-auto px-4">
+				<div class="text-center mb-12">
+					<h2 class="text-3xl text-white md:text-4xl font-bold mb-4">
+						What Our Adventurers Say
+					</h2>
+					<p class="text-lg text-gray-300 max-w-2xl mx-auto">
+						Hear from players who have experienced our escape rooms
+					</p>
+				</div>
+				<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+					{
+						testimonials.map((testimonial) => (
+							<Testimonial
+								quote={testimonial.quote}
+								author={testimonial.author}
+								rating={testimonial.rating}
+								class="animate-fade-in [animation-delay:200ms]"
+							/>
+						))
+					}
+				</div>
+			</div>
+		</section>
+
+		{/* Location & Hours */}
+		<section class="py-16 bg-gray-900 text-white">
+			<div class="container mx-auto px-4">
+				<div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+					<div>
+						<h2 class="text-3xl md:text-4xl font-bold mb-6">
+							Find Us in Downtown Sarasota
+						</h2>
+						<div class="space-y-4 mb-8">
+							<div class="flex items-start gap-3">
+								<MapPinIcon class="h-6 w-6 text-purple-400 mt-1" />
+								<div>
+									<h3 class="font-bold text-xl">Address</h3>
+									<p class="text-gray-300">
+										6250 N Lockwood Ridge Rd , Sarasota, FL 34243
+									</p>
+									<p class="text-gray-400 text-sm mt-1">
+										Free parking available in the rear lot
+									</p>
+								</div>
+							</div>
+
+							<div class="flex items-start gap-3">
+								<ClockIcon class="h-6 w-6 text-purple-400 mt-1" />
+								<div>
+									<h3 class="font-bold text-xl">Hours</h3>
+									<p class="text-gray-300">
+										Monday - Sunday: 10:00 AM - 10:00 PM
+									</p>
+									<p class="text-gray-400 text-sm mt-1">
+										Last booking starts at 8:30 PM
+									</p>
+								</div>
+							</div>
+						</div>
+						<a
+							href="https://www.google.com/maps?q=6250+N+Lockwood+Ridge+Rd,+Sarasota,+FL+34243"
+							target="_blank"
+							rel="noopener noreferrer"
+							class={getButtonClass({ size: "lg" })}
+						>
+							Get Directions
+						</a>
+					</div>
+
+					<div
+						class="relative h-[400px] rounded-xl overflow-hidden bg-gray-800 w-full border border-gray-700 flex flex-col items-center justify-center"
+					>
+						<span class="text-lg font-medium">Map placeholder</span>
+						<span>Will be an interactive map on live site.</span>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		{/* Booking CTA */}
+		<BookingCTA />
+	</div>
+</Layout>
+
+<script>
+	const arrow = document.getElementById("scroll-arrow");
+
+	const handleScroll = () => {
+		if (window.scrollY > 25) {
+			arrow?.classList.add("opacity-0");
+			arrow?.classList.remove("opacity-100");
+		} else {
+			arrow?.classList.remove("opacity-0");
+			arrow?.classList.add("opacity-100");
+		}
+	};
+
+	window.addEventListener("scroll", handleScroll);
+</script>

@@ -1,0 +1,423 @@
+---
+import BookingCTA from "../components/BookingCTA.astro";
+import { getButtonClass } from "../components/Button/getButtonClass";
+import { ArrowRightIcon, SearchIcon } from "../components/Icons";
+import Input from "../components/Input.astro";
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="FAQ - Escape Reality">
+	<div class="flex min-h-screen flex-col" x-data="faqComponent">
+		<!-- Hero Section -->
+		<section class="relative h-[60vh] overflow-hidden">
+			<div class="absolute inset-0 bg-black/60 z-10"></div>
+			<img
+				src="/images/faq-hero.webp"
+				alt="Frequently Asked Questions"
+				class="object-cover w-full absolute blur-[1px] -mt-96"
+			/>
+			<div
+				class="relative z-20 container mx-auto px-4 h-full flex flex-col justify-center items-center text-center"
+			>
+				<h1
+					class="text-4xl md:text-6xl font-bold text-white leading-tight mb-4"
+				>
+					Frequently Asked <span class="text-purple-400">Questions</span>
+				</h1>
+				<p class="text-xl text-gray-200 max-w-2xl">
+					Find answers to common questions about our escape room experiences.
+				</p>
+			</div>
+		</section>
+
+		<!-- Search Section -->
+		<section
+			class="py-12 bg-gradient-to-b from-purple-900 to-indigo-900 text-white"
+		>
+			<div class="container mx-auto px-4">
+				<div class="max-w-2xl mx-auto">
+					<div class="relative">
+						<SearchIcon
+							class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5"
+						/>
+						<Input
+							placeholder="Search for answers..."
+							x-model="searchQuery"
+							class="pl-10"
+						/>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- FAQ Content -->
+		<section class="py-16 bg-gray-900">
+			<div class="container mx-auto px-4">
+				<div class="flex flex-col md:flex-row gap-8">
+					<!-- Category Sidebar -->
+					<div class="w-full md:w-1/4">
+						<div
+							class="bg-gray-800 border border-gray-600 rounded-xl p-6 sticky top-20"
+						>
+							<h3 class="text-xl font-bold mb-4 text-white">Categories</h3>
+							<ul class="space-y-2">
+								<li>
+									<button
+										@click="activeCategory = 'all'"
+										:class="activeCategory === 'all' ? 'bg-purple-600 text-white' : 'text-gray-300 hover:bg-gray-700'"
+										class="w-full text-left px-3 py-2 rounded-lg transition font-medium"
+									>
+										All Questions
+									</button>
+								</li>
+								<template x-for="category in faqCategories">
+									<li>
+										<button
+											@click="activeCategory = category.id"
+											:class="activeCategory === category.id ? 'bg-purple-600 text-white' : 'text-gray-300 hover:bg-gray-700'"
+											class="w-full text-left px-3 py-2 rounded-lg transition font-medium"
+											x-text="category.name"
+										>
+										</button>
+									</li>
+								</template>
+							</ul>
+						</div>
+					</div>
+
+					<!-- FAQ Content -->
+					<div class="w-full md:w-3/4">
+						<!-- Search Results Header -->
+						<div x-show="searchQuery" class="mb-8">
+							<h2 class="text-2xl font-bold text-white mb-4">
+								Search Results: <span x-text="filteredFaqs.length"></span>
+								<span x-text="filteredFaqs.length === 1 ? 'answer' : 'answers'"
+								></span> found
+							</h2>
+						</div>
+
+						<!-- All Categories (when no search or filtering) -->
+						<div x-show="activeCategory === 'all' && !searchQuery">
+							<template x-for="category in faqCategories">
+								<div class="mb-12">
+									<h2
+										class="text-2xl font-bold text-white mb-6"
+										x-text="category.name"
+									>
+									</h2>
+									<div class="space-y-4">
+										<template x-for="faq in category.questions">
+											<div
+												class="border border-gray-600 rounded-lg overflow-hidden"
+												x-data="{ open: false }"
+											>
+												<button
+													@click="open = !open"
+													class="w-full flex justify-between items-center px-6 py-4 bg-gray-800 text-white hover:bg-gray-700 transition-colors"
+												>
+													<span x-text="faq.question"></span>
+													<svg
+														xmlns="http://www.w3.org/2000/svg"
+														width="24"
+														height="24"
+														viewBox="0 0 24 24"
+														fill="none"
+														stroke="currentColor"
+														stroke-width="2"
+														stroke-linecap="round"
+														stroke-linejoin="round"
+														:class="open ? 'transform rotate-180' : ''"
+														class="transition-transform duration-200"
+													>
+														<polyline points="6 9 12 15 18 9"></polyline>
+													</svg>
+												</button>
+												<div
+													x-show="open"
+													x-transition:enter="transition ease-out duration-200"
+													x-transition:enter-start="opacity-0 transform -translate-y-2"
+													x-transition:enter-end="opacity-100 transform translate-y-0"
+													class="px-6 py-4 bg-gray-800 text-gray-300"
+													x-text="faq.answer"
+												>
+												</div>
+											</div>
+										</template>
+									</div>
+								</div>
+							</template>
+						</div>
+
+						<!-- Filtered Results -->
+						<div x-show="activeCategory !== 'all' || searchQuery">
+							<h2
+								class="text-2xl font-bold text-white mb-6"
+								x-text="faqCategories.find((cat) => cat.id === activeCategory).name"
+							>
+							</h2>
+							<div x-show="filteredFaqs.length > 0" class="space-y-4">
+								<template x-for="faq in filteredFaqs" :key="faq.id">
+									<div
+										class="border border-gray-600 rounded-lg overflow-hidden"
+										x-data="{ open: false }"
+									>
+										<button
+											@click="open = !open"
+											class="w-full flex justify-between items-center px-6 py-4 bg-gray-800 text-white hover:bg-gray-700 transition-colors"
+										>
+											<span x-text="faq.question"></span>
+											<svg
+												xmlns="http://www.w3.org/2000/svg"
+												width="24"
+												height="24"
+												viewBox="0 0 24 24"
+												fill="none"
+												stroke="currentColor"
+												stroke-width="2"
+												stroke-linecap="round"
+												stroke-linejoin="round"
+												:class="open ? 'transform rotate-180' : ''"
+												class="transition-transform duration-200"
+											>
+												<polyline points="6 9 12 15 18 9"></polyline>
+											</svg>
+										</button>
+										<div
+											x-show="open"
+											x-transition:enter="transition ease-out duration-200"
+											x-transition:enter-start="opacity-0 transform -translate-y-2"
+											x-transition:enter-end="opacity-100 transform translate-y-0"
+											class="px-6 py-4 bg-gray-800 text-gray-300"
+											x-text="faq.answer"
+										>
+										</div>
+									</div>
+								</template>
+							</div>
+
+							<!-- No Results Found -->
+							<div
+								x-show="filteredFaqs.length === 0"
+								class="bg-gray-800 border border-gray-600 rounded-xl p-8 text-center"
+							>
+								<h3 class="text-xl font-bold text-white mb-2">
+									No results found
+								</h3>
+								<p class="text-gray-400 mb-4">
+									We couldn't find any answers matching your search. Please try
+									different keywords or browse our categories.
+								</p>
+								<button
+									@click="searchQuery = ''; activeCategory = 'all'"
+									class="bg-purple-600 hover:bg-purple-700 text-white font-medium py-2 px-4 rounded-md"
+								>
+									View All Questions
+								</button>
+							</div>
+						</div>
+
+						<!-- Still Have Questions -->
+						<div
+							class="mt-12 bg-gray-800 border border-gray-600 rounded-xl p-8"
+						>
+							<h3 class="text-2xl font-bold text-white mb-4">
+								Still Have Questions?
+							</h3>
+							<p class="text-gray-300 mb-6">
+								Can't find the answer you're looking for? Our team is here to
+								help with any questions you might have about our escape rooms.
+							</p>
+							<div class="flex flex-col sm:flex-row gap-4">
+								<a href="/contact" class={getButtonClass({})}>
+									Contact Us
+									<ArrowRightIcon class="ml-2 h-4 w-4" />
+								</a>
+								<a
+									href="tel:+19418065858"
+									class={getButtonClass({
+										variant: "outline",
+									})}
+								>
+									Call (941) 806-5858
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- Booking CTA -->
+		<BookingCTA />
+	</div>
+</Layout>
+
+<script>
+	import Alpine from "alpinejs";
+
+	const faqCategories = [
+		{
+			id: "general",
+			name: "General Questions",
+			questions: [
+				{
+					id: "what-is-escape-room",
+					question: "What is an escape room?",
+					answer:
+						"An escape room is an immersive, interactive adventure game where players are locked in a themed room and must solve a series of puzzles, find clues, and complete objectives within a set time limit (usually 60 minutes) to 'escape' or complete the mission.",
+				},
+				{
+					id: "how-many-players",
+					question: "How many players can participate?",
+					answer:
+						"Our escape rooms accommodate 2-8 players per game. We recommend 4-6 players for the optimal experience, but our rooms are designed to be enjoyable for any group size within that range.",
+				},
+				{
+					id: "age-requirements",
+					question: "Are there age requirements?",
+					answer:
+						"Players of all ages are welcome, but we recommend participants be at least 10 years old to fully enjoy and contribute to the experience. Children under 16 must be accompanied by an adult. Some of our rooms may have specific age recommendations based on theme and difficulty.",
+				},
+				{
+					id: "claustrophobia",
+					question: "I'm claustrophobic. Will I be comfortable?",
+					answer:
+						"Our rooms are spacious and you are never actually locked in. Emergency exits are always available and clearly marked. Game masters monitor the rooms at all times and can assist if you feel uncomfortable. Many claustrophobic guests have enjoyed our games without issues.",
+				},
+				{
+					id: "scary",
+					question: "Are the rooms scary?",
+					answer:
+						"Our rooms are designed to be thrilling and immersive, but not frightening. There are no jump scares, horror elements, or actors that will touch or scare you. The Murder Mystery Mansion has a slightly spooky atmosphere, but it's more intriguing than scary.",
+				},
+			],
+		},
+		{
+			id: "booking",
+			name: "Booking & Pricing",
+			questions: [
+				{
+					id: "how-to-book",
+					question: "How do I make a reservation?",
+					answer:
+						"Reservations can be made online through our booking system, by phone at (941) 555-1234, or by email at info@escaperealitysarasota.com. We recommend booking at least 24-48 hours in advance, especially for weekend slots.",
+				},
+				{
+					id: "pricing",
+					question: "How much does it cost?",
+					answer:
+						"Our standard pricing is $30 per person. We offer discounts for groups of 6 or more, students, military personnel, and seniors. Special rates are available for corporate events and private parties.",
+				},
+				{
+					id: "cancellation-policy",
+					question: "What is your cancellation policy?",
+					answer:
+						"Cancellations made more than 48 hours before your scheduled game receive a full refund. Cancellations within 24-48 hours receive a 50% refund. Cancellations less than 24 hours before your game or no-shows are not eligible for refunds but may be rescheduled within 30 days based on availability.",
+				},
+				{
+					id: "private-bookings",
+					question: "Will we be paired with strangers?",
+					answer:
+						"No, all bookings at Escape Reality Sarasota are private. Your group will have the entire room to yourselves at no additional cost, regardless of group size.",
+				},
+				{
+					id: "gift-cards",
+					question: "Do you offer gift cards?",
+					answer:
+						"Yes! Gift cards are available for purchase online or in person. They make perfect presents for birthdays, holidays, or any special occasion. Gift cards are valid for 12 months from the date of purchase and can be used for any of our escape rooms.",
+				},
+			],
+		},
+		{
+			id: "gameplay",
+			name: "Gameplay & Experience",
+			questions: [
+				{
+					id: "arrive-early",
+					question: "How early should we arrive?",
+					answer:
+						"Please arrive 15 minutes before your scheduled time for check-in and a brief orientation. Late arrivals may result in shortened game time, as we must start other groups on schedule.",
+				},
+				{
+					id: "what-to-bring",
+					question: "What should I bring?",
+					answer:
+						"Just bring yourself and your team! We provide everything needed to solve the puzzles. We recommend wearing comfortable clothing and shoes. Please leave large bags and unnecessary items in your car, as storage space is limited.",
+				},
+				{
+					id: "phones-allowed",
+					question: "Can we use our phones during the game?",
+					answer:
+						"No, phones and other electronic devices are not allowed in the escape rooms. We provide lockers for your belongings. This policy ensures an immersive experience and prevents cheating or damage to the game elements.",
+				},
+				{
+					id: "physical-requirements",
+					question: "Is physical activity required?",
+					answer:
+						"Our games require minimal physical activity. You may need to bend, reach, or move small objects, but there's no climbing, crawling, or heavy lifting. Our rooms are designed to be accessible to most participants.",
+				},
+				{
+					id: "game-master",
+					question: "Will someone help us if we get stuck?",
+					answer:
+						"Yes! A game master monitors your progress throughout the experience. You can request hints if you get stuck, and your game master will provide assistance to ensure you have an enjoyable experience.",
+				},
+			],
+		},
+		{
+			id: "special-events",
+			name: "Special Events & Groups",
+			questions: [
+				{
+					id: "corporate-events",
+					question: "Do you host corporate team building events?",
+					answer:
+						"Escape rooms are perfect for team building. We offer special corporate packages that include private use of our facility, customized experiences, and optional meeting space. We can accommodate groups of up to 30 people across our three rooms.",
+				},
+				{
+					id: "birthday-parties",
+					question: "Can I host a birthday party?",
+					answer:
+						"Yes! We offer birthday packages that include game play, a dedicated party space, and optional add-ons like cake service and decorations. Our staff will help make your celebration memorable and hassle-free.",
+				},
+				{
+					id: "large-groups",
+					question: "Can you accommodate large groups?",
+					answer:
+						"Yes, we can accommodate groups of up to 24 people at once across our three rooms. For larger groups, we can arrange staggered start times. Please contact us directly to arrange large group bookings.",
+				},
+				{
+					id: "private-events",
+					question: "Can I rent the entire facility?",
+					answer:
+						"Yes, you can rent our entire facility for private events. This gives you exclusive access to all three escape rooms and our common areas. Perfect for large corporate events, holiday parties, or special celebrations.",
+				},
+			],
+		},
+	];
+
+	document.addEventListener("alpine:init", () => {
+		Alpine.data("faqComponent", () => ({
+			activeCategory: "all",
+			searchQuery: "",
+			faqCategories,
+			get filteredFaqs() {
+				const categories =
+					this.activeCategory === "all"
+						? faqCategories
+						: faqCategories.filter((cat) => cat.id === this.activeCategory);
+
+				return categories.flatMap((category) =>
+					category.questions.filter(
+						(q) =>
+							!this.searchQuery ||
+							q.question
+								.toLowerCase()
+								.includes(this.searchQuery.toLowerCase()) ||
+							q.answer.toLowerCase().includes(this.searchQuery.toLowerCase()),
+					),
+				);
+			},
+		}));
+	});
+</script>

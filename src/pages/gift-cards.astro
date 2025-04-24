@@ -1,0 +1,163 @@
+---
+import Button from "../components/Button";
+import { GiftIcon } from "../components/Icons";
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="Gift Cards - Escape Reality">
+	<div class="flex min-h-screen flex-col">
+		{/* Hero Section */}
+		<section class="relative h-[60vh] overflow-hidden">
+			<div class="absolute inset-0 bg-black/60 z-10"></div>
+			<img
+				src="/images/gift-card-hero.webp"
+				alt="Gift cards"
+				class="object-cover w-full absolute blur-[1px] -mt-12"
+			/>
+			<div
+				class="relative z-20 container mx-auto px-4 h-full flex flex-col justify-center items-center text-center"
+			>
+				<h1
+					class="text-4xl md:text-6xl font-bold text-white leading-tight mb-4"
+				>
+					Give the Gift of <span class="text-purple-400">Adventure</span>
+				</h1>
+				<p class="text-xl text-gray-200 max-w-2xl mb-12">
+					Our gift cards make the perfect present for friends, family, and
+					colleagues who love challenges and adventure.
+				</p>
+			</div>
+		</section>
+
+		{/* Gift Card Options */}
+		<section
+			class="py-16 bg-gradient-to-b from-purple-900 to-indigo-900 text-white"
+		>
+			<div class="container mx-auto px-4">
+				<div class="text-center mb-12">
+					<h2 class="text-3xl md:text-4xl font-bold mb-4">
+						Choose Your Gift Card
+					</h2>
+					<p class="text-lg text-purple-200 max-w-2xl mx-auto">
+						Select from our range of gift card options, perfect for any
+						occasion.
+					</p>
+				</div>
+
+				<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+					<div
+						class="bg-purple-800/50 backdrop-blur-sm p-8 rounded-xl text-center border border-purple-700"
+					>
+						<div
+							class="bg-purple-700 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4"
+						>
+							<GiftIcon class="h-8 w-8" />
+						</div>
+						<h3 class="text-xl font-bold mb-2">Single Game</h3>
+						<p class="text-purple-200 mb-4">
+							Perfect for a one-time adventure. Valid for any of our three
+							escape rooms.
+						</p>
+						<div class="text-2xl font-bold mb-6">$30 per person</div>
+						<Button class="bg-purple-600 hover:bg-purple-700 w-full"
+							>Purchase</Button
+						>
+					</div>
+
+					<div
+						class="bg-purple-800/50 backdrop-blur-sm p-8 rounded-xl text-center border-2 border-purple-500 relative"
+					>
+						<div
+							class="absolute -top-4 left-0 right-0 mx-auto w-max px-4 py-1 bg-purple-500 rounded-full text-sm font-bold"
+						>
+							MOST POPULAR
+						</div>
+						<div
+							class="bg-purple-700 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4"
+						>
+							<GiftIcon class="h-8 w-8" />
+						</div>
+						<h3 class="text-xl font-bold mb-2">Double Adventure</h3>
+						<p class="text-purple-200 mb-4">
+							Experience two different escape rooms with a special discount.
+						</p>
+						<div class="text-2xl font-bold mb-6">$50 per person</div>
+						<Button class="bg-purple-600 hover:bg-purple-700 w-full"
+							>Purchase</Button
+						>
+					</div>
+
+					<div
+						class="bg-purple-800/50 backdrop-blur-sm p-8 rounded-xl text-center border border-purple-700"
+					>
+						<div
+							class="bg-purple-700 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4"
+						>
+							<GiftIcon class="h-8 w-8" />
+						</div>
+						<h3 class="text-xl font-bold mb-2">Custom Amount</h3>
+						<p class="text-purple-200 mb-4">
+							Choose your own gift card amount for maximum flexibility.
+						</p>
+						<div class="text-2xl font-bold mb-6">You decide!</div>
+						<Button class="bg-purple-600 hover:bg-purple-700 w-full"
+							>Purchase</Button
+						>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		{/* FAQ */}
+		<section class="py-16 bg-black text-white">
+			<div class="container mx-auto px-4">
+				<div class="text-center mb-12">
+					<h2 class="text-3xl md:text-4xl font-bold mb-4">Gift Card FAQs</h2>
+					<p class="text-lg text-gray-300 max-w-2xl mx-auto">
+						Common questions about our gift cards.
+					</p>
+				</div>
+
+				<div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+					<div class="bg-gray-800 p-6 rounded-xl border border-gray-700">
+						<h3 class="text-xl font-bold mb-3">
+							How long are gift cards valid?
+						</h3>
+						<p class="text-gray-300">
+							Our gift cards are valid for 12 months from the date of purchase.
+						</p>
+					</div>
+
+					<div class="bg-gray-800 p-6 rounded-xl border border-gray-700">
+						<h3 class="text-xl font-bold mb-3">
+							Can gift cards be used for any game?
+						</h3>
+						<p class="text-gray-300">
+							Yes, gift cards can be used for any of our three escape room
+							experiences.
+						</p>
+					</div>
+
+					<div class="bg-gray-800 p-6 rounded-xl border border-gray-700">
+						<h3 class="text-xl font-bold mb-3">
+							How do recipients redeem their gift card?
+						</h3>
+						<p class="text-gray-300">
+							Recipients can book online using the gift card code or call us to
+							make a reservation.
+						</p>
+					</div>
+
+					<div class="bg-gray-800 p-6 rounded-xl border border-gray-700">
+						<h3 class="text-xl font-bold mb-3">
+							Can I use multiple gift cards for one booking?
+						</h3>
+						<p class="text-gray-300">
+							Yes, multiple gift cards can be combined for a single booking.
+						</p>
+					</div>
+				</div>
+			</div>
+		</section>
+	</div>
+</Layout>
