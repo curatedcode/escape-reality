@@ -58,15 +58,14 @@ import Layout from "../layouts/Layout.astro";
 							<MapPinIcon class="h-8 w-8" />
 						</div>
 						<h3 class="text-xl font-bold mb-2">Our Location</h3>
-						<p class="text-purple-200">123 Main Street, Sarasota, FL 34236</p>
-						<p class="text-purple-200 mt-2">
-							Downtown Sarasota, near the Arts District
+						<p class="text-purple-200">
+							6250 N Lockwood Ridge Rd , Sarasota, FL 34243
 						</p>
 						<a
 							href="https://www.google.com/maps?q=6250+N+Lockwood+Ridge+Rd,+Sarasota,+FL+34243"
 							target="_blank"
 							rel="noopener noreferrer"
-							class={getButtonClass({})}
+							class={getButtonClass({ class: "mt-6" })}
 						>
 							Get Directions
 							<ArrowRightIcon class="ml-1 h-4 w-4" />
@@ -213,8 +212,14 @@ import Layout from "../layouts/Layout.astro";
 						<div
 							class="relative h-[400px] rounded-xl overflow-hidden bg-gray-800 w-full border border-gray-700 flex flex-col items-center justify-center"
 						>
-							<span class="text-lg font-medium">Map placeholder</span>
-							<span>Will be an interactive map on live site.</span>
+							<iframe
+								src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3521.2572551722376!2d-82.497217024823!3d27.385593037955036!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88c341c8e7d7c1db%3A0xa76f7c2fd3bb3c88!2s6250%20N%20Lockwood%20Ridge%20Rd%2C%20Sarasota%2C%20FL%2034243!5e0!3m2!1sen!2sus!4v1713960177000!5m2!1sen!2sus"
+								width="100%"
+								height="100%"
+								style="border: 0;"
+								allowfullscreen={true}
+								loading="lazy"
+								title="Escape Reality"></iframe>
 						</div>
 
 						<div class="bg-gray-800 border border-gray-600 p-6 rounded-xl">
