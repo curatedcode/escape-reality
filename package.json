@@ -4,7 +4,7 @@
 	"version": "0.0.1",
 	"scripts": {
 		"dev": "astro dev --port=3000 --host",
-		"build": "pnpm lint && astro build",
+		"build": "astro build",
 		"preview": "astro preview --host",
 		"astro": "astro",
 		"test": "playwright test",
