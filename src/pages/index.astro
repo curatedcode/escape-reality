@@ -45,15 +45,17 @@ const testimonials = [
       <img
         src="/images/hero-background.webp"
         alt="Escape room adventure"
-        class="object-cover w-full absolute blur-[1px]"
+        class="object-cover size-full absolute"
       />
       <div
-        class="relative -mt-14 z-20 container mx-auto px-4 h-full flex flex-col justify-center items-start md:-mt-10"
+        class="relative z-20 container mx-auto px-4 h-full flex flex-col justify-center items-start"
       >
-        <div class="max-w-2xl space-y-6">
+        <div class="max-w-2xl space-y-6 -mt-12">
           <h1 class="text-4xl md:text-6xl font-bold text-white leading-tight">
             Escape Reality, <br />
-            <span class="text-purple-400">Embrace Adventure</span>
+            <div class="text-accent-9 drop-shadow-[0_0_8px_#000]">
+              Embrace Adventure
+            </div>
           </h1>
           <p class="text-xl text-gray-200">
             Immerse yourself in thrilling escape room experiences designed to
@@ -64,14 +66,22 @@ const testimonials = [
               href="https://bookeo.com/escaperealityfl"
               target="_blank"
               rel="noopener noreferrer"
-              class={getButtonClass({ size: "lg" })}
+              class={getButtonClass({
+                size: "lg",
+                class:
+                  "relative transition-all after:border after:border-accent-11 after:bg-white/80 after:rounded-lg after:h-10 after:left-0 after:w-full after:translate-2 after:absolute after:transition-transform after:-z-1 hover:after:translate-0",
+              })}
             >
               Book Your Adventure
               <ArrowRightIcon class="ml-2 h-4 w-4" />
             </a>
             <a
               href="/games"
-              class={getButtonClass({ variant: "outline", size: "lg" })}
+              class={getButtonClass({
+                variant: "ghost",
+                size: "lg",
+                class: "text-white",
+              })}
             >
               Explore Our Games
             </a>
@@ -79,7 +89,7 @@ const testimonials = [
         </div>
         <ChevronDownIcon
           id="scroll-arrow"
-          class="size-12 absolute bottom-8 left-1/2 -translate-x-1/2 text-white/50 animate-float transition hidden md:block"
+          class="size-12 absolute bottom-14 left-1/2 -translate-x-1/2 text-white/50 animate-float transition hidden md:block"
         />
       </div>
 
@@ -134,7 +144,7 @@ const testimonials = [
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div
-            class="bg-purple-800/50 p-8 rounded-xl text-center border border-purple-700"
+            class="bg-gray-900 p-8 rounded-xl text-center border border-gray-700"
           >
             <div
               class="bg-purple-700 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4"
@@ -149,7 +159,7 @@ const testimonials = [
           </div>
 
           <div
-            class="bg-purple-800/50 p-8 rounded-xl text-center border border-purple-700"
+            class="bg-gray-900 p-8 rounded-xl text-center border border-gray-700"
           >
             <div
               class="bg-purple-700 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4"
@@ -164,7 +174,7 @@ const testimonials = [
           </div>
 
           <div
-            class="bg-purple-800/50 p-8 rounded-xl text-center border border-purple-700"
+            class="bg-gray-900 p-8 rounded-xl text-center border border-gray-700"
           >
             <div
               class="bg-purple-700 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4"
