@@ -8,12 +8,6 @@ import { defineConfig } from "astro/config";
 export default defineConfig({
 	vite: {
 		plugins: [tailwindcss()],
-		resolve: {
-			alias: {
-				"~": "./src",
-			},
-			extensions: [".mjs", ".js", ".ts", ".jsx", ".tsx", ".json", ".astro"],
-		},
 	},
 	integrations: [alpinejs({ entrypoint: "./alpine.config" }), react()],
 });
