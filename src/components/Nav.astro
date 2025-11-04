@@ -1,0 +1,85 @@
+---
+import { MenuIcon, XIcon } from "lucide-react";
+---
+
+<header
+	x-data="{ isScrolled: false, isExpanded: false }"
+	x-init="
+		isScrolled = document.documentElement.scrollTop > 68;
+    window.addEventListener('scroll', () => {
+      isScrolled = document.documentElement.scrollTop > 68;
+    }, { passive: true });
+		window.addEventListener('resize', () => {
+			isExpanded = false
+		}, { passive: true })
+  "
+	x-cloak="true"
+	class="w-full flex items-center px-3 text-lg text-white z-9999 absolute top-0 transition-all ease-linear md:justify-center"
+	:class="[isScrolled ? 'fixed py-4 bg-background shadow-md md:py-5' : 'bg-transparent py-6', isExpanded && 'bg-background!']"
+>
+	<nav>
+		<button
+			type="button"
+			class="outline-none transition-colors focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 hover:text-primary md:hidden"
+			:class="isScrolled && 'mt-1.5'"
+			@click="isExpanded = !isExpanded"
+		>
+			<span class="sr-only">Open menu</span>
+			<MenuIcon className="size-6.5" :class="isExpanded && 'hidden'" />
+			<XIcon className="size-6.5" :class="!isExpanded && 'hidden'" />
+		</button>
+		<!-- Desktop -->
+		<ul class="gap-8 justify-center hidden md:flex">
+			<li>
+				<a
+					href="/#hero"
+					class="outline-none transition-colors font-medium focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 hover:text-primary"
+					>Home</a
+				>
+			</li>
+			<li>
+				<a
+					href="/#experiences"
+					class="outline-none transition-colors font-medium focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 hover:text-primary"
+					>Experiences</a
+				>
+			</li>
+			<li>
+				<a
+					href="#how-it-works"
+					class="outline-none transition-colors font-medium focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 hover:text-primary"
+					>Process</a
+				>
+			</li>
+		</ul>
+		<!-- Mobile -->
+		<ul
+			class="flex flex-col gap-6 w-full pt-4 px-3"
+			x-show="isExpanded"
+			x-cloak="true"
+			x-collapse
+		>
+			<li>
+				<a
+					href="/#hero"
+					class="outline-none transition-colors font-medium focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 hover:text-primary"
+					>Home</a
+				>
+			</li>
+			<li>
+				<a
+					href="/#experiences"
+					class="outline-none transition-colors font-medium focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 hover:text-primary"
+					>Experiences</a
+				>
+			</li>
+			<li>
+				<a
+					href="#how-it-works"
+					class="outline-none transition-colors font-medium focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 hover:text-primary"
+					>Process</a
+				>
+			</li>
+		</ul>
+	</nav>
+</header>
