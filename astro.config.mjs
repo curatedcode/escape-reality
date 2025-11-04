@@ -12,6 +12,7 @@ export default defineConfig({
 			alias: {
 				"~": "./src",
 			},
+			extensions: [".mjs", ".js", ".ts", ".jsx", ".tsx", ".json", ".astro"],
 		},
 	},
 	integrations: [alpinejs({ entrypoint: "./alpine.config" }), react()],
