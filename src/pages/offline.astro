@@ -1,14 +1,16 @@
 ---
-import { getButtonClass } from "../components/Button/getButtonClass";
-import Layout from "../layouts/Layout.astro";
+import { buttonVariants } from "~/components/ui/button";
+import Layout from "~/layouts/Layout.astro";
 ---
 
-<Layout title="Offline - Escape Reality">
-  <div class="flex items-center justify-center">
-    <div class="text-center pt-48">
-      <h1 class="text-5xl font-bold mb-4">No internet</h1>
-      <p class="text-xl mb-4">Uh-Oh! You don't have access to the internet</p>
-      <a href="/" class={getButtonClass({ variant: "solid" })}> Return Home </a>
-    </div>
-  </div>
+<Layout title="Offline" hideNav>
+	<div class="flex items-center justify-center h-[95vh]">
+		<div class="text-center -mt-12">
+			<h1 class="text-5xl font-bold mb-4">No internet</h1>
+			<p class="text-xl mb-4">Please connect to the internet and try again</p>
+			<a href="/" class={buttonVariants({ variant: "default" })}>
+				Return Home
+			</a>
+		</div>
+	</div>
 </Layout>

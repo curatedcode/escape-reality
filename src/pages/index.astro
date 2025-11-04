@@ -1,352 +1,509 @@
 ---
-import BookingCTA from "../components/BookingCTA.astro";
-import Button from "../components/Button";
-import { getButtonClass } from "../components/Button/getButtonClass";
-import GameCard from "../components/GameCard.astro";
 import {
-	ArrowRightIcon,
-	CalendarDaysIcon,
-	ChevronDownIcon,
-	ClockIcon,
-	MapPinIcon,
-	StarIcon,
+	CalendarIcon,
+	InfinityIcon,
+	TerminalIcon,
 	UsersIcon,
-} from "../components/Icons";
-import Testimonial from "../components/Testimonial.astro";
-import Layout from "../layouts/Layout.astro";
+	ZapIcon,
+} from "lucide-react";
+import ExperienceCard from "~/components/ExperienceCard.astro";
+import ProcessCard from "~/components/ProcessCard.astro";
+import TestimonialCard from "~/components/TestimonialCard.astro";
+import { buttonVariants } from "~/components/ui/button";
+import Layout from "~/layouts/Layout.astro";
+
+const experiences = [
+	{
+		title: "CLUE_DUNNIT?",
+		image: "/assets/images/clue-dunnit-preview.webp",
+		difficulty: 3,
+		duration: "60 MIN",
+		players: "2-8",
+		description:
+			"Solve a chilling murder case in an abandoned mansion before you become the next victim.",
+		color: "glitch-red",
+	},
+	{
+		title: "TOXIC_TAKEDOWN",
+		image: "/assets/images/toxic-takedown-preview.webp",
+		difficulty: 4,
+		duration: "60 MIN",
+		players: "3-8",
+		description:
+			"Join an elite FBI team to infiltrate a criminal organization and recover stolen intelligence.",
+		color: "glitch-green",
+	},
+	{
+		title: "HEIST",
+		image: "/assets/images/heist-preview.webp",
+		difficulty: 4,
+		duration: "60 MIN",
+		players: "3-10",
+		description:
+			"Break into a famous brewery and quickly steal their secret recipe before security catches you.",
+		color: "glitch-cyan",
+	},
+] as const;
+
+const processSteps = [
+	{
+		icon: TerminalIcon,
+		code: "SELECT_ROOM",
+		title: "Choose Your Portal",
+		description:
+			"Browse available rooms and select the reality you wish to escape into.",
+	},
+	{
+		icon: CalendarIcon,
+		code: "BOOK_TIMESLOT",
+		title: "Reserve Your Slot",
+		description: "Lock in your preferred date and time.",
+	},
+	{
+		icon: UsersIcon,
+		code: "ASSEMBLE_TEAM",
+		title: "Gather Your Crew",
+		description:
+			"Bring 2-10 allies. Some realities require strength in numbers.",
+	},
+	{
+		icon: ZapIcon,
+		code: "BREAK_REALITY",
+		title: "Enter & Escape",
+		description:
+			"Step through the door. Solve the puzzles. Break free. Or remain trapped forever.",
+	},
+] as const;
 
 const testimonials = [
 	{
-		quote:
-			"The puzzles were so cleverly designed! We had a blast solving the Murder Mystery Manor and will definitely be back for the other rooms!",
-		author: "Sarah J.",
-		rating: 5 as const,
+		id: "FL-1337",
+		player: "Nick M.",
+		message:
+			"We had a great time at Escape Reality in Sarasota. Will definitely go there again.",
+		signal: 89,
 	},
 	{
-		quote:
-			"Great team-building activity! Our company had an amazing time in the FBI Secret Operation room. The staff was fantastic and made sure we had a memorable experience.",
-		author: "Michael T.",
-		rating: 5 as const,
+		id: "FL-4729",
+		player: "Kaylee J.",
+		message:
+			"The staff here is very kind and makes it a great experience. The escape rooms are so fun to do with family and friends. Recommend this place for a fun get away!",
+		signal: 94,
 	},
 	{
-		quote:
-			"The Brewery Heist was challenging but super fun! The attention to detail in the room design was impressive. Can't wait to try their other rooms!",
-		author: "Jessica R.",
-		rating: 5 as const,
+		id: "FL-8103",
+		player: "Lori C.",
+		message:
+			"My first time in an escape room, had so much fun. We had a fantastic time. I would love to do it again.",
+		signal: 87,
 	},
-];
+	{
+		id: "FL-6481",
+		player: "Kristin C.",
+		message:
+			"We had a ball! Bring your friends, bring your family. The more the merrier! Highly recommend! The host, was super helpful and welcoming!",
+		signal: 82,
+	},
+	{
+		id: "FL-2956",
+		player: "Kory L.",
+		message:
+			"Came a few times a few years ago and loved the how immersive the rooms were. Quality immersive rooms, attention to detail, clue creativity, friendly, and clean execution.",
+		signal: 91,
+	},
+	{
+		id: "FL-4820",
+		player: "Becca P.",
+		message:
+			"We had a great time! Morgan was great and very helpful! Would definitely come back and I would recommend to anyone!",
+		signal: 96,
+	},
+] as const;
 ---
 
-<Layout title="Escape Reality">
-  <div class="flex min-h-screen flex-col">
-    {/* Hero Section */}
-    <section class="relative h-[93vh] overflow-hidden">
-      <div class="absolute inset-0 bg-black/60 z-10"></div>
-      <img
-        src="/images/hero-background.webp"
-        alt="Escape room adventure"
-        class="object-cover size-full absolute"
-      />
-      <div
-        class="relative z-20 container mx-auto px-4 h-full flex flex-col justify-center items-start"
-      >
-        <div class="max-w-2xl space-y-6 -mt-12">
-          <h1 class="text-4xl md:text-6xl font-bold text-white leading-tight">
-            Escape Reality, <br />
-            <div class="text-accent-9 drop-shadow-[0_0_8px_#000]">
-              Embrace Adventure
-            </div>
-          </h1>
-          <p class="text-xl text-gray-200">
-            Immerse yourself in thrilling escape room experiences designed to
-            challenge your mind and test your teamwork.
-          </p>
-          <div class="flex flex-col sm:flex-row gap-4">
-            <a
-              href="https://bookeo.com/escaperealityfl"
-              target="_blank"
-              rel="noopener noreferrer"
-              class={getButtonClass({
-                size: "lg",
-                class:
-                  "relative transition-all after:border after:border-accent-11 after:bg-white/80 after:rounded-lg after:h-10 after:left-0 after:w-full after:translate-2 after:absolute after:transition-transform after:-z-1 hover:after:translate-0",
-              })}
-            >
-              Book Your Adventure
-              <ArrowRightIcon class="ml-2 h-4 w-4" />
-            </a>
-            <a
-              href="/games"
-              class={getButtonClass({
-                variant: "ghost",
-                size: "lg",
-                class: "text-white",
-              })}
-            >
-              Explore Our Games
-            </a>
-          </div>
-        </div>
-        <ChevronDownIcon
-          id="scroll-arrow"
-          class="size-12 absolute bottom-14 left-1/2 -translate-x-1/2 text-white/50 animate-float transition hidden md:block"
-        />
-      </div>
-
-      {/* Key Info Banner */}
-      <div
-        class="absolute bottom-0 left-0 right-0 bg-black/80 backdrop-blur-sm py-4 z-20"
-      >
-        <div
-          class="container mx-auto px-4 flex flex-wrap justify-center items-center gap-4 text-white lg:justify-between"
-        >
-          <div class="flex items-center gap-2">
-            <MapPinIcon class="h-5 w-5 text-purple-400" />
-            <span>Downtown Sarasota, FL</span>
-          </div>
-          <div class="flex items-center gap-2">
-            <ClockIcon class="h-5 w-5 text-purple-400" />
-            <span>Open 7 days: 10AM - 10PM</span>
-          </div>
-          <div class="flex items-center gap-2">
-            <UsersIcon class="h-5 w-5 text-purple-400" />
-            <span>Private bookings at no extra charge</span>
-          </div>
-          <div class="flex items-center gap-2">
-            <CalendarDaysIcon class="h-5 w-5 text-purple-400" />
-            <a
-              href="https://bookeo.com/escaperealityfl"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="underline hover:text-purple-400"
-            >
-              Check Availability
-            </a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    {/* USP Section */}
-    <section
-      class="py-16 pb-44 bg-gradient-to-b from-purple-900 to-indigo-900 text-white clip-diagonal-bottom-reversed"
-    >
-      <div class="container mx-auto px-4">
-        <div class="text-center mb-12">
-          <h2 class="text-3xl md:text-4xl font-bold mb-4">
-            Why Choose Escape Reality?
-          </h2>
-          <p class="text-lg text-purple-200 max-w-2xl mx-auto">
-            We offer a premium escape room experience with unique features you
-            won't find elsewhere.
-          </p>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div
-            class="bg-gray-900 p-8 rounded-xl text-center border border-gray-700"
-          >
-            <div
-              class="bg-purple-700 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4"
-            >
-              <UsersIcon class="h-8 w-8" />
-            </div>
-            <h3 class="text-xl font-bold mb-2">Private Bookings</h3>
-            <p class="text-purple-200">
-              Every booking is private - your group won't be combined with
-              strangers, at no extra cost.
-            </p>
-          </div>
-
-          <div
-            class="bg-gray-900 p-8 rounded-xl text-center border border-gray-700"
-          >
-            <div
-              class="bg-purple-700 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4"
-            >
-              <StarIcon class="h-8 w-8" />
-            </div>
-            <h3 class="text-xl font-bold mb-2">Three Unique Games</h3>
-            <p class="text-purple-200">
-              Choose from three immersive adventures, each with its own unique
-              theme and challenges.
-            </p>
-          </div>
-
-          <div
-            class="bg-gray-900 p-8 rounded-xl text-center border border-gray-700"
-          >
-            <div
-              class="bg-purple-700 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4"
-            >
-              <ClockIcon class="h-8 w-8" />
-            </div>
-            <h3 class="text-xl font-bold mb-2">60-Minute Adventures</h3>
-            <p class="text-purple-200">
-              A full hour of immersive gameplay with state-of-the-art puzzles
-              and technology.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    {/* Featured Games */}
-    <div class="-mt-30 clip-diagonal-top-reversed">
-      <section class="pt-20 pb-44 bg-gray-900 clip-diagonal-bottom">
-        <div class="container mx-auto px-4">
-          <div class="text-center mb-12">
-            <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">
-              Our Immersive Games
-            </h2>
-            <p class="text-lg text-gray-300 max-w-2xl mx-auto">
-              Choose your adventure from our three thrilling escape room
-              experiences.
-            </p>
-          </div>
-
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <GameCard
-              title="Clue Dunnit?"
-              description="Solve a chilling murder case in an abandoned mansion before you become the next victim."
-              image="/images/murder-mystery.webp"
-              difficulty={3}
-              players={{ min: 2, max: 8 }}
-              duration={60}
-              theme="mystery"
-              price={35}
-            />
-
-            <GameCard
-              title="FBI & The Toxic Takedown"
-              description="Join an elite FBI team to infiltrate a criminal organization and recover stolen intelligence."
-              image="/images/fbi-operation.webp"
-              difficulty={4}
-              players={{ min: 3, max: 8 }}
-              duration={60}
-              theme="fbi"
-              price={35}
-            />
-
-            <GameCard
-              title="Brewery Heist"
-              description="Break into a famous brewery to steal their secret recipe before security catches you."
-              image="/images/brewery-heist.webp"
-              difficulty={4}
-              players={{ min: 3, max: 10 }}
-              duration={60}
-              theme="brewery"
-              price={35}
-            />
-          </div>
-        </div>
-      </section>
-    </div>
-
-    {/* Testimonials */}
-    <section class="py-16 pt-24 -mt-36 bg-gray-800 clip-diagonal-top">
-      <div class="container mx-auto px-4">
-        <div class="text-center mb-12">
-          <h2 class="text-3xl text-white md:text-4xl font-bold mb-4">
-            What Our Adventurers Say
-          </h2>
-          <p class="text-lg text-gray-300 max-w-2xl mx-auto">
-            Hear from players who have experienced our escape rooms
-          </p>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {
-            testimonials.map((testimonial) => (
-              <Testimonial
-                quote={testimonial.quote}
-                author={testimonial.author}
-                rating={testimonial.rating}
-                class="animate-fade-in [animation-delay:200ms]"
-              />
-            ))
-          }
-        </div>
-      </div>
-    </section>
-
-    {/* Location & Hours */}
-    <section class="py-16 bg-gray-900 text-white">
-      <div class="container mx-auto px-4">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-          <div>
-            <h2 class="text-3xl md:text-4xl font-bold mb-6">
-              Find Us in Downtown Sarasota
-            </h2>
-            <div class="space-y-4 mb-8">
-              <div class="flex items-start gap-3">
-                <MapPinIcon class="h-6 w-6 text-purple-400 mt-1" />
-                <div>
-                  <h3 class="font-bold text-xl">Address</h3>
-                  <p class="text-gray-300">
-                    6250 N Lockwood Ridge Rd , Sarasota, FL 34243
-                  </p>
-                  <p class="text-gray-400 text-sm mt-1">
-                    Free parking available in the rear lot
-                  </p>
-                </div>
-              </div>
-
-              <div class="flex items-start gap-3">
-                <ClockIcon class="h-6 w-6 text-purple-400 mt-1" />
-                <div>
-                  <h3 class="font-bold text-xl">Hours</h3>
-                  <p class="text-gray-300">
-                    Monday - Sunday: 10:00 AM - 10:00 PM
-                  </p>
-                  <p class="text-gray-400 text-sm mt-1">
-                    Last booking starts at 8:30 PM
-                  </p>
-                </div>
-              </div>
-            </div>
-            <a
-              href="https://www.google.com/maps?q=6250+N+Lockwood+Ridge+Rd,+Sarasota,+FL+34243"
-              target="_blank"
-              rel="noopener noreferrer"
-              class={getButtonClass({ size: "lg" })}
-            >
-              Get Directions
-            </a>
-          </div>
-
-          <div
-            class="relative h-[400px] rounded-xl overflow-hidden bg-gray-800 w-full border border-gray-700 flex flex-col items-center justify-center"
-          >
-            <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3521.2572551722376!2d-82.497217024823!3d27.385593037955036!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88c341c8e7d7c1db%3A0xa76f7c2fd3bb3c88!2s6250%20N%20Lockwood%20Ridge%20Rd%2C%20Sarasota%2C%20FL%2034243!5e0!3m2!1sen!2sus!4v1713960177000!5m2!1sen!2sus"
-              width="100%"
-              height="100%"
-              style="border: 0;"
-              allowfullscreen={true}
-              loading="lazy"
-              title="Escape Reality"></iframe>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    {/* Booking CTA */}
-    <BookingCTA />
-  </div>
+<Layout>
+	<link
+		slot="head"
+		rel="preload"
+		href="/assets/fonts/orbitron-v35-latin-500.woff2"
+		as="font"
+		type="font/woff2"
+		crossorigin="anonymous"
+	/>
+	<link
+		slot="head"
+		rel="preload"
+		href="/assets/fonts/orbitron-v35-latin-900.woff2"
+		as="font"
+		type="font/woff2"
+		crossorigin="anonymous"
+	/>
+	<link
+		slot="head"
+		rel="preload"
+		href="/assets/fonts/roboto-mono-v31-latin-500.woff2"
+		as="font"
+		type="font/woff2"
+		crossorigin="anonymous"
+	/>
+	<!-- Content -->
+	<section id="hero" class="h-screen relative overflow-hidden">
+		<img
+			src="/assets/images/hero-backdrop.webp"
+			width="1920"
+			height="1080"
+			class="absolute inset-0 size-full object-cover object-[40%_0%] opacity-10"
+			style={{
+				WebkitMaskImage:
+					"radial-gradient(ellipse 100% 20% at 50% 100%, transparent 50%, #000 100%)",
+				maskImage:
+					"radial-gradient(ellipse 100% 20% at 50% 100%, transparent 50%, #000 100%)",
+			}}
+			alt="Standing bar inside a business"
+			loading="eager"
+		/>
+		<div
+			class="absolute inset-0 z-0 size-full animate-pulse-grid opacity-20"
+			style={{
+				backgroundImage: `
+        linear-gradient(to right, rgba(0, 255, 255, 0.1) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(0, 255, 255, 0.1) 1px, transparent 1px),
+				linear-gradient(to right, rgba(255, 0, 170, 0.05) 3px, transparent 3px),
+        linear-gradient(to bottom, rgba(255, 0, 170, 0.05) 3px, transparent 3px)
+      `,
+				backgroundSize: "30px 30px",
+				WebkitMaskImage:
+					"radial-gradient(ellipse 200% 30% at 50% 0%, transparent 50%, #000 100%), radial-gradient(ellipse 70% 40% at 50% 100%, transparent 50%, #000 100%)",
+				maskImage:
+					"radial-gradient(ellipse 200% 30% at 50% 0%, transparent 50%, #000 100%), radial-gradient(ellipse 70% 40% at 50% 100%, transparent 50%, #000 100%)",
+				WebkitMaskComposite: "source-in",
+				maskComposite: "intersect",
+			}}
+		>
+		</div>
+		<div
+			class="font-heading w-full px-3 absolute top-[45%] left-1/2 -translate-1/2 flex flex-col gap-6"
+		>
+			<div>
+				<h1
+					class="text-6xl font-black text-center animate-glitch tracking-wider motion-reduce:animate-none motion-reduce:text-shadow-glitch md:text-7xl"
+				>
+					<span
+						class="block animate-in slide-in-from-left-10 fade-in-0 duration-1000"
+						>ESCAPE</span
+					>
+					<span
+						class="block animate-in slide-in-from-right-10 fade-in-0 duration-1000"
+						>REALITY</span
+					>
+				</h1>
+			</div>
+			<p
+				class="text-lg font-medium font-body max-w-76 mx-auto mb-6 text-foreground/90 animate-in slide-in-from-bottom-50 fade-in-0 tracking-wide duration-800 md:max-w-none md:text-xl"
+			>
+				Sarasota’s Ultimate Escape Challenge
+			</p>
+			<div
+				class="space-y-4 max-w-72 mx-auto w-full animate-in fade-in-0 duration-1000"
+			>
+				<div class="relative">
+					<div
+						class="absolute -z-1 pointer-events-none h-12 w-[calc(100%+6px)] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-primary/30 blur-lg rounded-md"
+					>
+					</div>
+					<a
+						href="#"
+						class={buttonVariants({
+							variant: "default",
+							size: "lg",
+							className: "w-full text-lg",
+						})}>Book Now</a
+					>
+				</div>
+				<a
+					href="#"
+					class={buttonVariants({
+						variant: "outline",
+						className: "w-full bg-background/80! text-xs hover:bg-background!",
+					})}>View Rooms</a
+				>
+			</div>
+		</div>
+		<div
+			class="text-sm opacity-50 text-muted-foreground/80 tracking-wide text-center leading-2.75 absolute bottom-8 left-1/2 -translate-x-1/2 w-full flex flex-col gap-0.5 md:flex-row md:gap-6 md:justify-center"
+			aria-hidden="true"
+		>
+			<div>
+				&gt; SYSTEM_STATUS: <span
+					class="text-green-400 animate-[pulse_4s_cubic-bezier(0.4,0,0.6,1)_infinite]"
+					>ACTIVE</span
+				>
+			</div>
+			<br />
+			<div>
+				&gt; REALITY_CHECK: <span
+					class="text-red-400 animate-[pulse_4s_cubic-bezier(0.4,0,0.6,1)_infinite]"
+					>FAILED</span
+				>
+			</div>
+		</div>
+	</section>
+	<div class="bg-linear-to-b from-background to-glitch-void">
+		<section id="experiences" class="py-20 px-4 relative">
+			<div class="container mx-auto relative z-10 max-w-7xl">
+				<div class="text-center mb-16">
+					<div class="inline-block mb-4">
+						<span class="text-sm text-primary tracking-wider">
+							&gt; DIMENSIONS_AVAILABLE: <span class="text-foreground">03</span>
+						</span>
+					</div>
+					<h2
+						class="text-3xl md:text-6xl font-black mb-4 text-shadow-glitch break-all animate-shimmer"
+					>
+						CHOOSE<span class="text-muted">_</span>YOUR<span class="text-muted"
+							>_</span
+						>REALITY
+					</h2>
+					<p class="text-muted-foreground max-w-2xl mx-auto">
+						Each portal leads to a different dimension. Each dimension tests a
+						different aspect of your mind. Choose wisely.
+					</p>
+				</div>
+				<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+					{
+						experiences.map((room, index) => (
+							<ExperienceCard index={index} {...room} />
+						))
+					}
+				</div>
+				<div
+					x-data="{ isVisible: undefined }"
+					x-intersect.threshold.70="isVisible = true"
+					:class="isVisible && 'fade-in-0 animate-in visible'"
+					class="mt-16 invisible text-center"
+					style={{ "--tw-duration": "2s" }}
+				>
+					<span
+						class="inline-block text-sm px-6 py-3 border border-border/80 rounded bg-background/80 text-muted-foreground/70"
+					>
+						&gt; MORE_DIMENSIONS_SOON
+					</span>
+				</div>
+			</div>
+		</section>
+		<div
+			class="overflow-hidden h-16 max-w-[1920px] mx-auto opacity-10 w-full flex"
+		>
+			{
+				Array.from({ length: 33 }).map((_, i) => (
+					<div
+						class="text-primary text-xs animate-pulse"
+						style={{
+							animationDelay: `${i * 0.1}s`,
+							animationDuration: "1s",
+						}}
+					>
+						01010011
+						<br />
+						11000101
+						<br />
+						10100011
+						<br />
+						01110110
+						<br />
+						01010011
+						<br />
+						11000101
+						<br />
+						10100011
+						<br />
+						01110110
+					</div>
+				))
+			}
+		</div>
+		<section id="how-it-works" class="py-20 px-4 relative">
+			<div class="container mx-auto relative z-10">
+				<div class="text-center mb-16">
+					<div class="inline-block mb-4">
+						<span class="text-sm text-primary tracking-wider">
+							&gt; ESCAPE_PROTOCOL: <span class="text-foreground"
+								>INITIALIZED</span
+							>
+						</span>
+					</div>
+					<h2
+						class="text-4xl md:text-6xl font-black mb-4 text-shadow-glitch animate-shimmer"
+					>
+						THE<span class="text-muted">_</span>INTERFACE
+					</h2>
+				</div>
+				<div
+					class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto"
+				>
+					{
+						processSteps.map((step, index) => (
+							<ProcessCard
+								arrLength={processSteps.length}
+								index={index}
+								{...step}
+							/>
+						))
+					}
+				</div>
+				<div
+					x-data="{ isVisible: undefined }"
+					x-intersect.threshold.70="isVisible = true"
+					:class="isVisible && 'fade-in-0 animate-in visible'"
+					class="mt-16 max-w-156 mx-auto invisible"
+					style={{ "--tw-duration": "2.25s" }}
+				>
+					<div class="border border-primary/20 rounded p-6 text-xs space-y-2">
+						<div class="text-primary">&gt; SYSTEM_MESSAGE:</div>
+						<p class="text-muted-foreground leading-relaxed">
+							Teams that fail to escape within the allotted time will remain in
+							their chosen dimension indefinitely.
+						</p>
+						<span class="text-destructive">Proceed at your own risk.</span>
+					</div>
+				</div>
+			</div>
+		</section>
+		<section class="pt-20 pb-12 px-4 md:pb-20">
+			<div class="container mx-auto relative z-10">
+				<div class="text-center mb-16">
+					<div class="inline-block mb-4">
+						<span class="text-sm text-primary tracking-wider">
+							&gt; INTERCEPTED_TRANSMISSIONS: <span class="text-foreground"
+								>05</span
+							>
+						</span>
+					</div>
+					<h2
+						class="text-4xl md:text-6xl font-black mb-4 text-shadow-glitch animate-shimmer"
+					>
+						SURVIVOR<span class="text-muted">_</span>SIGNALS
+					</h2>
+					<p class="text-muted-foreground">
+						Fragments intercepted from those who've crossed the threshold.
+					</p>
+				</div>
+				<div
+					x-data="{ isVisible: undefined }"
+					x-intersect.threshold.30="isVisible = true"
+					:data-visible="isVisible"
+					class="max-w-6xl mx-auto relative flex flex-col items-center gap-10 md:min-h-[600px] mb-16"
+				>
+					{
+						testimonials.map((testimonial, index) => (
+							<TestimonialCard index={index} {...testimonial} />
+						))
+					}
+				</div>
+			</div>
+		</section>
+		<section
+			class="relative py-60 px-4 overflow-hidden border-t border-border/40 md:mt-30 md:pt-40"
+		>
+			<div class="absolute inset-0 flex items-center justify-center">
+				<div
+					class="absolute size-[800px] rounded-full border-2 border-primary/20 animate-vortex"
+				>
+				</div>
+				<div
+					class="absolute size-[600px] rounded-full border-2 border-accent/20 animate-vortex"
+					style={{ animationDuration: "15s", animationDirection: "reverse" }}
+				>
+				</div>
+				<div
+					class="absolute size-[400px] rounded-full border-2 border-secondary/20 animate-vortex"
+					style={{ animationDuration: "10s" }}
+				>
+				</div>
+			</div>
+			<div class="container mx-auto relative z-10 text-center">
+				<div class="max-w-4xl mx-auto">
+					<div class="mb-6">
+						<span
+							class="text-sm text-primary tracking-wider inline-block px-4 py-2 border border-primary/30 rounded bg-primary/5"
+						>
+							&gt; FINAL_GATEWAY_PROTOCOL: <span
+								class="text-foreground animate-pulse">ACTIVE</span
+							>
+						</span>
+					</div>
+					<h2
+						class="text-5xl md:text-6xl font-black mb-6 animate-glitch leading-tight motion-reduce:animate-none motion-reduce:text-shadow-glitch"
+					>
+						REALITY<span class="text-muted">_</span>IS
+						<br />
+						OVERRATED
+					</h2>
+					<p
+						class="text-base md:text-xl text-muted-foreground mb-12 max-w-2xl mx-auto leading-relaxed"
+					>
+						The simulation is cracking. The portals are open. Your escape awaits
+						beyond the threshold. Will you cross over?
+					</p>
+					<div
+						class="flex flex-col sm:flex-row gap-6 justify-center items-center mb-12"
+					>
+						<a
+							href="#book"
+							class={buttonVariants({
+								size: "lg",
+								className:
+									"bg-linear-to-r from-primary/20 via-secondary/10 to-primary/40 px-12 py-6 text-base! shadow-lg shadow-primary/20 transition-all will-change-transform hover:scale-101 hover:shadow-primary/60",
+							})}
+						>
+							BOOK_NOW
+						</a>
+					</div>
+					<div
+						x-data="{
+							visible: undefined,
+							escapes: 0,
+							animate() {
+								let e = 0;
+								const eTarget = 2600;
+								const step = () => {
+									if (e < eTarget) e += 20;
+									this.escapes = e;
+									if (e < eTarget) requestAnimationFrame(step)
+								}
+								step()
+							}
+						}"
+						:data-visible="visible"
+						x-intersect="visible = true; animate();"
+						class="grid grid-cols-3 max-w-xl mx-auto text-primary group"
+					>
+						<div class="text-center">
+							<div
+								class="text-3xl md:text-4xl mb-2 w-21 mx-auto origin-bottom animate-[countY_0.8s_ease-in-out]"
+								x-text="escapes"
+							>
+								0
+							</div>
+							<div class="text-sm text-muted-foreground">ESCAPES</div>
+						</div>
+						<div class="text-center border-x border-primary/20 px-3">
+							<div
+								class="text-3xl md:text-4xl mb-2 w-21 mx-auto invisible fade-in-0 duration-1000 group-data-visible:animate-in group-data-visible:visible"
+							>
+								03
+							</div>
+							<div class="text-sm text-muted-foreground">DIMENSIONS</div>
+						</div>
+						<div class="flex flex-col items-center justify-between">
+							<InfinityIcon
+								className="size-10 mb-1 spin-in fade-in-0 duration-1000 invisible group-data-visible:visible group-data-visible:animate-in"
+							/>
+							<div class="text-sm text-muted-foreground">CHANCES</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	</div>
 </Layout>
-
-<script>
-  const arrow = document.getElementById("scroll-arrow");
-
-  const handleScroll = () => {
-    if (window.scrollY > 25) {
-      arrow?.classList.add("opacity-0");
-      arrow?.classList.remove("opacity-100");
-    } else {
-      arrow?.classList.remove("opacity-0");
-      arrow?.classList.add("opacity-100");
-    }
-  };
-
-  window.addEventListener("scroll", handleScroll);
-</script>

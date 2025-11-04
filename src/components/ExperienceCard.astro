@@ -1,0 +1,125 @@
+---
+import { ClockIcon, LockIcon, UsersIcon } from "lucide-react";
+import { buttonVariants } from "~/components/ui/button";
+
+interface Props {
+	index: number;
+	title: string;
+	image: string;
+	difficulty: number;
+	duration: string;
+	players: string;
+	description: string;
+	color: "glitch-red" | "glitch-cyan" | "glitch-green";
+}
+
+const {
+	index,
+	title,
+	image,
+	difficulty,
+	duration,
+	players,
+	description,
+	color,
+} = Astro.props;
+---
+
+<div
+	x-data="{ isVisible: undefined }"
+	x-intersect.threshold.70="isVisible = true"
+	class="invisible"
+	:class="isVisible && 'animate-in fade-in-0 slide-in-from-bottom-15 visible'"
+	style={{
+		"--tw-duration": index === 0 ? "1s" : index === 1 ? "1.35s" : "1.55s",
+	}}
+>
+	<div
+		data-color={color}
+		class="group relative overflow-hidden rounded-lg border bg-background transition-all duration-300 will-change-transform hover:scale-105 hover:shadow-lg data-[color='glitch-red']:hover:shadow-glitch-red/10 data-[color='glitch-cyan']:hover:shadow-glitch-cyan/10 data-[color='glitch-green']:hover:shadow-glitch-green/10"
+	>
+		<div class="relative h-64 overflow-hidden grid">
+			<img
+				src={image}
+				alt={title}
+				width="422"
+				height="256"
+				class="size-full object-cover transition-transform duration-500 group-hover:scale-110"
+				loading="lazy"
+			/>
+			<div
+				class="absolute inset-0 bg-linear-to-b from-transparent to-background opacity-0 transition-opacity duration-500 group-hover:opacity-60"
+			>
+			</div>
+		</div>
+		<div
+			class="p-6 relative flex flex-col h-[calc(100%-16rem)] justify-between"
+		>
+			<div>
+				<h3 class="text-2xl mb-2 text-shadow-glitch">
+					{
+						title
+							.split("")
+							.map((char, i) => (
+								<span class="hover:animate-glitch">{char}</span>
+							))
+					}
+				</h3>
+				<div class="mb-4">
+					<div class="flex items-center gap-2 mb-1.5">
+						<LockIcon className="size-4 text-muted-foreground" />
+						<span class="text-xs text-muted-foreground tracking-wider"
+							>DIFFICULTY_LVL</span
+						>
+					</div>
+					<div class="flex gap-1">
+						{
+							Array.from({ length: 5 }, (_, i) => (
+								<div
+									data-difficult={i < difficulty ? true : undefined}
+									class="h-1 flex-1"
+									style={{
+										backgroundColor:
+											i < difficulty
+												? `color-mix(in oklab, var(--${color}) 60%, transparent)`
+												: "var(--input)",
+									}}
+								/>
+							))
+						}
+					</div>
+				</div>
+				<div class="flex gap-4 mb-4 text-sm">
+					<div class="flex items-center gap-2 text-muted-foreground">
+						<ClockIcon className="size-4" />
+						<span>{duration}</span>
+					</div>
+					<div class="flex items-center gap-2 text-muted-foreground">
+						<UsersIcon className="size-4" />
+						<span>{players}</span>
+					</div>
+				</div>
+				<p class="text-sm text-muted-foreground mb-4">
+					{description}
+				</p>
+			</div>
+			<a
+				href="#"
+				class={buttonVariants({
+					variant: "outline",
+					className: "w-fit ml-auto",
+				})}
+			>
+				VIEW
+			</a>
+			<div
+				class="absolute top-0 right-0 size-8"
+				style={{
+					clipPath: "polygon(100% 0, 0 0, 100% 100%)",
+					backgroundColor: `color-mix(in oklab, var(--${color}) 60%, transparent)`,
+				}}
+			>
+			</div>
+		</div>
+	</div>
+</div>

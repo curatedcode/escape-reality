@@ -1,153 +1,123 @@
 ---
-import {
-	EnvelopeIcon,
-	FacebookIcon,
-	InstagramIcon,
-	MapPinIcon,
-	PhoneIcon,
-	YoutubeIcon,
-} from "./Icons";
+import { MailIcon, MapPinIcon, PhoneIcon } from "lucide-react";
+import FacebookIcon from "~/components/icons/FacebookIcon.astro";
+import InstagramIcon from "~/components/icons/InstagramIcon.astro";
+import YoutubeIcon from "~/components/icons/YoutubeIcon.astro";
 ---
 
-<footer class="bg-black text-white border-t border-gray-800">
-	<div class="container mx-auto px-4 py-12">
-		<div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-			<div class="space-y-4">
-				<a href="/" class="flex items-center gap-2">
-					<span class="text-2xl font-bold">
-						<span class="text-purple-400">Escape</span> Reality
-					</span>
-				</a>
-				<p class="text-gray-400">
-					Immersive escape room experiences in the heart of Sarasota, Florida.
-				</p>
-				<div class="flex space-x-4">
+<footer id="contact" class="pt-18 pb-10 px-4 border-t border-primary/20">
+	<div class="container mx-auto">
+		<div
+			class="grid grid-cols-1 gap-12 mb-16 md:grid-cols-3 md:justify-items-center"
+		>
+			<div>
+				<div>
+					<h3
+						class="font-heading text-2xl mb-4 animate-glitch motion-reduce:animate-none motion-reduce:text-shadow-glitch"
+					>
+						ESCAPE_REALITY
+					</h3>
+					<p class="text-sm text-muted-foreground mb-4 text-pretty max-w-66">
+						Breaking boundaries since 2016. Sarasota's ultimate escape room
+						experience.
+					</p>
+				</div>
+				<div class="flex gap-3">
 					<a
 						href="https://www.facebook.com/escaperealitysarasota"
-						class="text-gray-400 hover:text-purple-400"
+						rel="noopener"
+						referrerpolicy="no-referrer"
+						class="size-8 border border-primary/30 rounded flex items-center justify-center text-primary hover:border-primary hover:shadow-[0_0_10px_var(--primary)/0.5] transition-[border-color,box-shadow] group"
 					>
-						<FacebookIcon class="h-5 w-5" />
-						<span class="sr-only">Facebook</span>
+						<FacebookIcon
+							class="size-4 fill-muted-foreground/80 group-hover:fill-muted-foreground transition-colors"
+						/>
 					</a>
 					<a
 						href="http://instagram.com/escape.reality.srq"
-						class="text-gray-400 hover:text-purple-400"
+						rel="noopener"
+						referrerpolicy="no-referrer"
+						class="size-8 border border-primary/30 rounded flex items-center justify-center text-primary hover:border-primary hover:shadow-[0_0_10px_var(--primary)/0.5] transition-[border-color,box-shadow] group"
 					>
-						<InstagramIcon class="h-5 w-5" />
-						<span class="sr-only">Instagram</span>
+						<InstagramIcon
+							class="size-4 fill-muted-foreground/80 group-hover:fill-muted-foreground transition-colors"
+						/>
 					</a>
 					<a
 						href="https://www.youtube.com/channel/UC1n53dwNE5vK40VvG0U0iYQ"
-						class="text-gray-400 hover:text-purple-400"
+						rel="noopener"
+						referrerpolicy="no-referrer"
+						class="size-8 border border-primary/30 rounded flex items-center justify-center text-primary hover:border-primary hover:shadow-[0_0_10px_var(--primary)/0.5] transition-[border-color,box-shadow] group"
 					>
-						<YoutubeIcon class="h-5 w-5" />
-						<span class="sr-only">Youtube</span>
+						<YoutubeIcon
+							class="size-4 fill-muted-foreground/80 group-hover:fill-muted-foreground transition-colors"
+						/>
 					</a>
 				</div>
 			</div>
-
 			<div>
-				<h3 class="text-lg font-bold mb-4">Quick as</h3>
-				<ul class="space-y-2">
-					<li>
-						<a href="/" class="text-gray-400 hover:text-purple-400"> Home </a>
-					</li>
-					<li>
-						<a href="/games" class="text-gray-400 hover:text-purple-400">
-							Our Games
-						</a>
-					</li>
-					<li>
-						<a href="/gift-cards" class="text-gray-400 hover:text-purple-400">
-							Gift Cards
-						</a>
-					</li>
-					<li>
-						<a
-							href="https://bookeo.com/escaperealityfl"
-							target="_blank"
-							rel="noopener noreferrer"
-							class="text-gray-400 hover:text-purple-400"
-						>
-							Book Now
-						</a>
-					</li>
-					<li>
-						<a href="/faq" class="text-gray-400 hover:text-purple-400"> FAQ </a>
-					</li>
-				</ul>
+				<h4 class="text-lg mb-4 text-primary">CONTACT_US</h4>
+				<div class="space-y-3 text-sm">
+					<a
+						href="mailto:escaperealityfl@gmail.com"
+						class="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors group"
+					>
+						<MailIcon className="size-4" />
+						<span>escaperealityfl@gmail.com</span>
+					</a>
+					<a
+						href="tel:+19418065858"
+						class="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors group"
+					>
+						<PhoneIcon className="size-4" />
+						<span>(941) 806-5858</span>
+					</a>
+					<a
+						href="https://maps.app.goo.gl/1Rw39Y4ZwH6oAGvz9"
+						target="_blank"
+						rel="noopener"
+						referrerpolicy="no-referrer"
+						class="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors group"
+					>
+						<MapPinIcon className="size-4 mt-1" />
+						<span>
+							6250 Lockwood Ridge Rd<br />
+							Sarasota, FL
+						</span>
+					</a>
+				</div>
 			</div>
-
 			<div>
-				<h3 class="text-lg font-bold mb-4">Our Games</h3>
-				<ul class="space-y-2">
-					<li>
-						<a
-							href="/games#murder-mystery"
-							class="text-gray-400 hover:text-purple-400"
-						>
-							Clue Dunnit?
-						</a>
-					</li>
-					<li>
-						<a
-							href="/games#fbi-operation"
-							class="text-gray-400 hover:text-purple-400"
-						>
-							FBI & the Toxic Takedown
-						</a>
-					</li>
-					<li>
-						<a
-							href="/games#brewery-heist"
-							class="text-gray-400 hover:text-purple-400"
-						>
-							Brewery Heist
-						</a>
-					</li>
-				</ul>
-			</div>
-
-			<div>
-				<h3 class="text-lg font-bold mb-4">Contact Us</h3>
-				<ul class="space-y-2">
-					<li class="flex items-center gap-2 text-gray-400">
-						<MapPinIcon class="h-4 w-4 text-purple-400" />
-						6250 N Lockwood Ridge Rd , Sarasota, FL 34243
-					</li>
-					<li class="flex items-center gap-2 text-gray-400">
-						<PhoneIcon class="h-4 w-4 text-purple-400" />
-						<a href="tel:+19418065858" class="hover:text-purple-400">
-							(941) 806-5858
-						</a>
-					</li>
-					<li class="flex items-center gap-2 text-gray-400">
-						<EnvelopeIcon class="h-4 w-4 text-purple-400" />
-						<a
-							href="mailto:info@escaperealitysarasota.com"
-							class="hover:text-purple-400"
-						>
-							escaperealityfl@gmail.com
-						</a>
-					</li>
-				</ul>
+				<h4 class="text-lg mb-4 text-primary">QUICK_LINKS</h4>
+				<nav class="space-y-2 text-sm">
+					<a
+						href="#"
+						class="block text-muted-foreground hover:text-primary transition-all duration-200 hover:translate-x-2"
+					>
+						&gt; Available Rooms
+					</a>
+					<a
+						href="#"
+						class="block text-muted-foreground hover:text-primary transition-all duration-200 hover:translate-x-2"
+					>
+						&gt; Booking
+					</a>
+					<a
+						href="#"
+						class="block text-muted-foreground hover:text-primary transition-all duration-200 hover:translate-x-2"
+					>
+						&gt; Reservations
+					</a>
+				</nav>
 			</div>
 		</div>
-
 		<div
-			class="border-t border-gray-800 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center"
+			class="text-muted-foreground pt-8 border-t border-primary/20 text-xs flex justify-center"
 		>
-			<p class="text-gray-400 text-sm">
-				&copy; {new Date().getFullYear()} Escape Reality Sarasota. All rights reserved.
-			</p>
-			<div class="flex gap-4 mt-4 md:mt-0">
-				<a href="/privacy" class="text-gray-400 hover:text-purple-400 text-sm">
-					Privacy Policy
-				</a>
-				<a href="/terms" class="text-gray-400 hover:text-purple-400 text-sm">
-					Terms of Service
-				</a>
-			</div>
+			<span>
+				<span class="text-lg">&copy;</span>
+				{new Date().getFullYear()} ESCAPE REALITY. All rights reserved.
+			</span>
 		</div>
 	</div>
 </footer>
