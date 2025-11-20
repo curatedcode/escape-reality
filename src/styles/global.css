@@ -202,4 +202,8 @@
 	body {
 		@apply bg-background text-foreground font-body;
 	}
+
+	html {
+		scroll-behavior: smooth;
+	}
 }
